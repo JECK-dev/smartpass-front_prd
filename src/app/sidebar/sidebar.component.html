@@ -1,0 +1,45 @@
+<div class="sidebar" [class.open]="sidebarAbierto">
+  <div class="toggle" (click)="toggleSidebar()">
+    <i class="bx bx-menu"></i>
+  </div>
+
+  <ul class="nav-list">
+    <li>
+      <a routerLink="/home">
+        <i class='bx bx-grid-alt'></i>
+        <span *ngIf="sidebarAbierto">Home</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/perfil">
+        <i class='bx bx-user'></i>
+        <span *ngIf="sidebarAbierto">Perfil</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/home">
+        <i class='bx bx-pie-chart-alt-2'></i>
+        <span *ngIf="sidebarAbierto">Analítica</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/home">
+        <i class='bx bx-folder'></i>
+        <span *ngIf="sidebarAbierto">Documentos</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/configuracion">
+        <i class='bx bx-cog'></i>
+        <span *ngIf="sidebarAbierto">Configuración</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="logout">
+    <a routerLink="/login">
+      <i class='bx bx-log-out'></i>
+      <span *ngIf="sidebarAbierto">Salir</span>
+    </a>
+  </div>
+</div>

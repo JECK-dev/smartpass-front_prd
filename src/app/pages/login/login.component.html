@@ -1,0 +1,39 @@
+<div class="full-page-gradient ">
+  <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+  
+        <h4 class="text-center mb-4">Bienvenidos a </h4>
+        
+        <div class = "mb-3  text-center">
+          <img src="assets/logo3.png" class="logo-img" alt="">
+        </div>
+  
+        <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Ingresa número documento..." formControlName="documento">
+          </div>
+        
+          <div class="mb-3">
+            <input type="password" class="form-control" placeholder="Contraseña" formControlName="password">
+          </div>
+        
+          <div *ngIf="mensajeError" class="alert alert-danger small py-1">
+            {{ mensajeError }}
+          </div>
+        
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        
+        
+  
+        <hr>
+  
+  
+        <div class="text-center">
+          <a routerLink="/recuperar-contrasena" type="submit" class="small">Forgot Password?</a>
+        </div>
+        <div class="text-center">
+          <a routerLink="/seleccion-registro" class="small">Create an Account!</a>
+        </div>
+      </div>
+</div>
+

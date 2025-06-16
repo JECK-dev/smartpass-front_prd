@@ -1,0 +1,11 @@
+<!-- layout.component.html -->
+<app-sidebar [sidebarAbierto]="sidebarAbierto" (toggle)="sidebarAbierto = $event"></app-sidebar>
+
+<div class="main-content" [class.expand]="!sidebarAbierto">
+  <div class="welcome-banner">
+    <h1><strong>Bienvenido {{ nombreCliente }} a SmartPass </strong></h1>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+
+

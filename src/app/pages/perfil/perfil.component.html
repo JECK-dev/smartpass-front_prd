@@ -1,0 +1,43 @@
+<div class="perfil-container">
+    <h2 class="perfil-titulo">Mi Perfil</h2>
+  
+    <div class="perfil-card">
+      <div class="perfil-row">
+        <label>Tipo de Cuenta:</label>
+        <span>{{ perfil.tipo }}</span>
+      </div>
+  
+      <div class="perfil-row">
+        <label>Nombre:</label>
+        <input *ngIf="modoEdicion" [(ngModel)]="perfilEditado.nombre" type="text" />
+        <span *ngIf="!modoEdicion">{{ perfil.nombre }}</span>
+      </div>
+  
+      <div class="perfil-row">
+        <label>N° Documento:</label>
+        <input *ngIf="modoEdicion" [(ngModel)]="perfilEditado.documento" type="text" />
+        <span *ngIf="!modoEdicion">{{ perfil.documento }}</span>
+      </div>
+  
+      <div class="perfil-row">
+        <label>Correo Electrónico:</label>
+        <input *ngIf="modoEdicion" [(ngModel)]="perfilEditado.correo" type="email" />
+        <span *ngIf="!modoEdicion">{{ perfil.correo }}</span>
+      </div>
+  
+      <div class="perfil-row">
+        <label>Teléfono:</label>
+        <input *ngIf="modoEdicion" [(ngModel)]="perfilEditado.telefono" type="text" />
+        <span *ngIf="!modoEdicion">{{ perfil.telefono }}</span>
+      </div>
+  
+      <div class="perfil-acciones">
+        <button *ngIf="!modoEdicion" (click)="habilitarEdicion()" class="btn-editar">Editar</button>
+        <div *ngIf="modoEdicion">
+          <button (click)="guardarCambios()" class="btn-guardar">Guardar</button>
+          <button (click)="cancelarEdicion()" class="btn-cancelar">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

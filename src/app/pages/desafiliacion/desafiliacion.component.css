@@ -1,0 +1,70 @@
+.home-section {
+    padding: 20px;
+    min-height: 100vh;
+    background-color: #ffffff;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .titulo-seccion h2 {
+    font-size: 24px;
+    color: #004f83;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  .filtros-desafiliacion {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .filtros-desafiliacion input,
+  .filtros-desafiliacion select {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .tabla-desafiliacion {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tabla-desafiliacion th,
+  .tabla-desafiliacion td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+  }
+  
+  .tabla-desafiliacion th {
+    background-color: #f4f6fc;
+    color: #4e73df;
+    font-weight: 600;
+  }
+  
+  .btn-desafiliar {
+    background-color: #e74a3b;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-desafiliar:hover {
+    background-color: #c0392b;
+  }
+  
+  @media (max-width: 768px) {
+    .home-section {
+      padding: 15px;
+    }
+  
+    .filtros-desafiliacion {
+      flex-direction: column;
+    }
+  }

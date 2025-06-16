@@ -1,0 +1,75 @@
+.home-section {
+    padding: 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+  }
+  
+  .titulo-seccion h2 {
+    color: #004f83;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  .formulario-consulta {
+    background-color: #f8f9fc;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .form-row {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-row label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .form-row select,
+  .form-row textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .acciones-formulario {
+    text-align: center;
+  }
+  
+  .btn-enviar {
+    background-color: #4e73df;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-enviar:hover {
+    background-color: #2e59d9;
+  }
+  
+  .mensaje-confirmacion {
+    margin-top: 20px;
+    color: #1cc88a;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .home-section {
+      padding: 15px;
+    }
+  
+    .formulario-consulta {
+      padding: 20px;
+    }
+  }

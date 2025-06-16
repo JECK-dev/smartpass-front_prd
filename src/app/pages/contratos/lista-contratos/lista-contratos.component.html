@@ -1,0 +1,60 @@
+<section class="home-section">
+  <div class="filtros-extendidos">
+    <input type="text" placeholder="Filtrar por nro. contrato..." [(ngModel)]="filtroCodigo" />
+    <select [(ngModel)]="filtroEstado">
+      <option value="">Todos los estados</option>
+      <option value="Activo">Activo</option>
+      <option value="Baja">Baja</option>
+      <option value="Suspendido">Suspendido</option>
+    </select>
+    <button class="limpiar-btn" (click)="limpiarFiltros()">Limpiar filtros</button>
+  </div>
+
+  <div class="titulo-seccion">
+    <h2>Contratos</h2>
+    <button type="button" routerLink="/crear-contrato" class="btn-agregar">
+      ➕ Agregar nuevo contrato
+    </button>
+  </div>
+
+  <table class="tabla-contratos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>ID Cliente</th>
+        <th>Nro Contrato</th>
+        <th>Tipo</th>
+        <th>Saldo</th>
+        <th>Fecha Creación</th>
+        <th>Fecha Modificación</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contrato of contratosFiltrados">
+        <td>{{ contrato.idContrato }}</td>
+        <td>{{ contrato.idCliente }}</td>
+        <td>{{ contrato.nroContrato }}</td>
+        <td>{{ contrato.tipoContrato }}</td>
+        <td>S/. {{ contrato.saldo | number:'1.0-2' }}</td>
+        <td>{{ contrato.fechaCreacion | date:'dd/MM/yyyy' }}</td>
+        <td>{{ contrato.fechaModificacion | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <span [class.activo]="contrato.idEstado === 1" 
+                [class.baja]="contrato.idEstado === 2" 
+                [class.suspendido]="contrato.idEstado === 3">
+            {{ estadoTexto(contrato.idEstado) }}
+          </span>
+        </td>
+        <td>
+          <button (click)="darDeBaja(contrato)" 
+                  [disabled]="contrato.idEstado === 2" 
+                  class="btn-dar-baja">
+            Dar de baja
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

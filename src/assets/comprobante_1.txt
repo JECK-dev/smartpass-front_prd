@@ -1,0 +1,5 @@
+Comprobante de Peaje
+Placa: ABC123
+Fecha: Sun Apr 28 2024 08:45:00 GMT-0500 (hora estándar de Perú)
+Plaza: 2
+Monto: S/. 6.6

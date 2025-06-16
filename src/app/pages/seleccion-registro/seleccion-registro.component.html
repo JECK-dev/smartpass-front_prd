@@ -1,0 +1,33 @@
+<div class="register-type-container">
+    <div class="left-side d-flex justify-content-center align-items-center">
+      <img src="assets/logo.png" alt="SmartPass" class="logo" />
+    </div>
+  
+    <div class="right-side d-flex flex-column justify-content-center align-items-start px-5">
+      <h2 class="fw-bold mb-2">Únete a nosotros!</h2>
+      <p class="text-muted mb-4">Para comenzar este viaje, cuéntanos qué tipo de cuenta abrirás.</p>
+  
+      <div class="account-option " (click)="goTo('individual')">
+        <div class="icon-container">
+          <i class="bi bi-person-fill"></i>
+        </div>
+        <div>
+          <strong>Individual</strong>
+          <p class="small mb-0">Cuenta personal para gestionar todas tus peajes.</p>
+        </div>
+        <i class="bi bi-arrow-right ms-auto"></i>
+      </div>
+  
+      <div class="account-option" (click)="goTo('empresa')">
+        <div class="icon-container">
+          <i class="bi bi-briefcase-fill"></i>
+        </div>
+        <div>
+          <strong>Business</strong>
+          <p class="small mb-0">Sea propietario o pertenezca a una empresa, esto es para usted.</p>
+        </div>
+        <i class="bi bi-arrow-right ms-auto"></i>
+      </div>
+    </div>
+  </div>
+  

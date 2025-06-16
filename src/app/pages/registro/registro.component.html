@@ -1,0 +1,100 @@
+<section class=" gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registre una cuenta individual</h3>
+              <form (submit)="registrarUsuario($event)">
+  
+                <!-- Nombre y Apellido -->
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="firstName" class="form-control form-control-lg" />
+                      <label class="form-label" for="firstName">Nombre Completo</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="lastName" class="form-control form-control-lg" />
+                      <label class="form-label" for="lastName">Apellido Completo</label>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Tipo de Documento y Número -->
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    
+                    <select id="tipoDocumento" class="form-select form-select-lg">
+                      <option value="">Seleccione</option>
+                      <option value="dni">DNI</option>
+                      <option value="ce">Carné de Extranjería</option>
+                      <option value="pasaporte">Pasaporte</option>
+                    </select>
+                    <label class="form-label" for="tipoDocumento">Tipo de Documento</label>
+                  </div>
+  
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="nroDocumento" class="form-control form-control-lg" />
+                      <label class="form-label" for="nroDocumento">Número de Documento</label>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Teléfono con código de país -->
+                <div class="row">
+                    <div class="col-md-6 mb-4 pb-2">
+                        <div class="input-group">
+                          <input type="text" class="form-control form-control-lg" placeholder="+51" id="codigoPais" maxlength="4" style="max-width: 80px;" />
+                          <input type="tel" id="phoneNumber" class="form-control form-control-lg" placeholder="912345678" />
+                        </div>
+                        <label class="form-label" for="phoneNumber">Teléfono</label>
+                      </div>
+                      
+  
+                  <!-- Email opcional -->
+                  <div class="col-md-6 mb-4 pb-2">
+                    <div class="form-outline">
+                      <input type="email" id="emailAddress" class="form-control form-control-lg" />
+                      <label class="form-label" for="emailAddress">Correo Electrónico</label>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Otra opción o sección futura -->
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                        <input type="password" id="password" class="form-control form-control-lg" />
+                        <label class="form-label" for="password">Contraseña</label>
+                      </div>
+                    </div>
+                  
+                    <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                        <input type="password" id="confirmPassword" class="form-control form-control-lg" />
+                        <label class="form-label" for="confirmPassword">Confirmar Contraseña</label>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                  
+  
+                <!-- Botón de envío -->
+                <div class="mt-4 pt-2">
+                  <button type="submit" class="btn btn-primary btn-lg w-100">Registrarme</button>
+                </div>
+  
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

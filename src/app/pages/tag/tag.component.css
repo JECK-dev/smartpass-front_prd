@@ -1,0 +1,90 @@
+.home-section {
+    padding: 2rem;
+    background-color: #fff;
+    min-height: 100vh;
+  }
+  
+  h2 {
+    color: #004f83;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .carga-masiva {
+    margin-bottom: 1.5rem;
+  }
+  
+  .carga-masiva input[type="file"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+  
+  .tabla-tags {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .tabla-tags th {
+    background-color: #f4f4f4;
+    color: #004f83;
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .tabla-tags td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .disponible {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .ocupado {
+    color: red;
+    font-weight: bold;
+  }
+
+  .filtros-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.filtro-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.filtro-item label {
+  font-weight: 600;
+  color: #004f83;
+  margin-bottom: 0.25rem;
+}
+
+.filtro-item input,
+.filtro-item select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 200px;
+}
+
+  
+  @media (max-width: 768px) {
+    .home-section {
+      padding: 1rem;
+    }
+  
+    .tabla-tags th,
+    .tabla-tags td {
+      font-size: 0.9rem;
+    }
+  }

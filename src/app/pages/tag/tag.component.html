@@ -1,0 +1,52 @@
+<section class="home-section">
+    <div class="filtros-container">
+        <div class="filtro-item">
+          <label for="filtroEstado">Estado:</label>
+          <select id="filtroEstado" [(ngModel)]="filtroEstado" (change)="aplicarFiltros()">
+            <option value="todos">Todos</option>
+            <option value="disponibles">Disponibles</option>
+            <option value="ocupados">Ocupados</option>
+          </select>
+        </div>
+
+        <div class="filtro-item">
+          <label for="busquedaId">Buscar por N° TAG:</label>
+          <input id="busquedaId" type="number" [(ngModel)]="busquedaId" (input)="aplicarFiltros()" placeholder="Ej: 1000000001" />
+        </div>
+    </div>
+    <!-- Subida de Excel -->
+    <div class="carga-masiva">
+      <label for="archivoExcel">Cargar archivo Excel:</label>
+      <input type="file" id="archivoExcel" (change)="cargarArchivoExcel($event)" accept=".xlsx, .xls" />
+    </div>
+
+    <h2>Gestión de TAGs</h2>
+  
+    
+  
+    <!-- Tabla de tags -->
+    <table class="tabla-tags">
+      <thead>
+        <tr>
+          <th>N° TAG</th>
+          <th>Disponibilidad</th>
+          <th>Ubicación</th>
+          <th>Fecha de Registro</th>
+          <th>Fecha de Asignación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tag of listaTagsFiltrados">
+          <td>{{ tag.numTag }}</td>
+          <td>
+            <span [ngClass]="tag.disponible ? 'disponible' : 'ocupado'">
+              {{ tag.disponible ? 'Disponible' : 'Ocupado' }}
+            </span>
+          </td>
+          <td>{{ tag.plaza?.nombre }}</td>
+          <td>{{ tag.fechaRegistro | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+          <td>{{ tag.fechaAsignacion ? (tag.fechaAsignacion | date:'dd/MM/yyyy HH:mm:ss') : '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>

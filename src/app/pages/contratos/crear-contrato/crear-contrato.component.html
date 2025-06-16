@@ -1,0 +1,26 @@
+<section class="home-section">
+  <h2>Registrar nuevo contrato</h2>
+  <form class="formulario" (ngSubmit)="guardarContrato()">
+
+    <div class="form-group">
+      <label for="nombres">Nombre del cliente:</label>
+      <input type="text" id="nombres" [value]="nombreUsuario" disabled>
+    </div>
+
+    <div class="form-group">
+      <label for="tipoPago">Tipo de pago:</label>
+      <select id="tipoPago" [(ngModel)]="contrato.tipoPago" name="tipoPago" required>
+        <option value="" disabled selected>Seleccionar tipo de pago</option>
+        <option value="Prepago">Prepago</option>
+        <option value="Pospago">Pospago</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaCreacion">Fecha de creación:</label>
+      <input type="date" id="fechaCreacion" [(ngModel)]="contrato.fechaCreacion" name="fechaCreacion" required>
+    </div>
+
+    <button type="submit" class="btn-guardar">Guardar contrato</button>
+  </form>
+</section>

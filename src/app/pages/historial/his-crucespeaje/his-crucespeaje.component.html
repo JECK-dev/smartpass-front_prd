@@ -1,0 +1,57 @@
+<section class="home-section">
+    <div class="titulo-seccion">
+      <h3>Cruces de Peaje</h3>
+    </div>
+    
+    <div class="filtros-transitos">
+      <input type="text" placeholder="Filtrar por placa..." [(ngModel)]="filtroPlaca" />
+      <input type="date" [(ngModel)]="filtroDesde" />
+      <input type="date" [(ngModel)]="filtroHasta" />
+      <button (click)="limpiarFiltros()">Limpiar</button>
+    </div>
+  
+    <!-- Resumen de cruces -->
+    <div class="resumen-metricas">
+      <div class="card-resumen">
+        <span class="label">Total Cruces </span>
+        <span class="valor">{{ transitosFiltrados.length }}</span>
+      </div>
+      <div class="card-resumen">
+        <span class="label">Consumo Total (S/) </span>
+        <span class="valor">{{ calcularTotal() | number:'1.2-2' }}</span>
+      </div>
+    </div>
+  
+    <!-- Filtros -->
+    
+  
+    <!-- Tabla -->
+    <table class="tabla-transitos">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Placa</th>
+          <th>Plaza</th>
+          <th>Vía</th>
+          <th>Categoría</th>
+          <th>Monto</th>
+          <th>IGV</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transitosFiltrados">
+          <td>{{ t.tr_id }}</td>
+          <td>{{ t.tr_fecha | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+          <td>{{ t.tr_placa }}</td>
+          <td>{{ t.tr_plaza }}</td>
+          <td>{{ t.tr_via }}</td>
+          <td>{{ t.tr_categoria }}</td>
+          <td>S/. {{ t.tr_monto }}</td>
+          <td>S/. {{ t.tr_igv }}</td>
+          <td><button (click)="descargarComprobante(t)">Descargar</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>

@@ -1,0 +1,40 @@
+.gradient-custom {
+    background: linear-gradient(to bottom right, rgb(106, 106, 229), rgb(21, 44, 175));
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .card-registration {
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px; /* ← antes era 600 */
+    margin: 0 auto;
+    padding: 1.2rem;
+  }
+  
+  
+  .form-control,
+  .form-select {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.6rem;
+  }
+  
+  .form-label {
+    font-size: 0.85rem;
+  }
+  
+  .btn {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  
+  @media (max-width: 576px) {
+    .card-registration {
+      padding: 1rem;
+    }
+  }
+  

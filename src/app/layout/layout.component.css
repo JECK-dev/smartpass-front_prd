@@ -1,0 +1,36 @@
+.main-content {
+    margin-left: 220px; /* sidebar abierto */
+    transition: margin-left 0.3s ease;
+    padding: 20px;
+  }
+  
+  .main-content.expand {
+    margin-left: 60px; /* sidebar colapsado */
+  }
+  
+  .welcome-banner {
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #f0f4ff;
+    border-left: 6px solid #004f83;
+  }
+  
+  .welcome-banner h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #004f83;
+  }
+  
+  /* Responsivo para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .welcome-banner h1 {
+      font-size: 20px;
+      text-align: center;
+    }
+  
+    .welcome-banner {
+      padding: 8px 12px;
+    }
+  }
+  

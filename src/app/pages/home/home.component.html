@@ -1,0 +1,15 @@
+<section class="home-section">
+  <div class="dashboard-container">
+    <!-- tus tarjetas -->
+    <app-home-card
+      *ngFor="let card of cards"
+      [title]="card.title"
+      [value]="card.value"
+      [icon]="card.icon"
+      [color]="card.color"
+      [ruta]="card.ruta">
+    </app-home-card>
+  </div>
+</section>
+
+

@@ -1,0 +1,38 @@
+<section class="home-section">
+    <div class="titulo-seccion">
+      <h2>Desafiliación de Vehículos</h2>
+    </div>
+  
+    <!-- Filtros -->
+    <div class="filtros-desafiliacion">
+      <input type="text" [(ngModel)]="numeroDocumento" placeholder="Buscar por documento..." />
+      <button class="btn-primario" (click)="buscarVehiculosPorDocumento()">Buscar</button>
+    </div>
+
+  
+    <!-- Tabla -->
+    <table class="tabla-desafiliacion">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Contrato</th>
+          <th>Modelo</th>
+          <th>Marca</th>
+          <th>Tag</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehiculo of vehiculosFiltradosPorTexto">
+          <td>{{ vehiculo.placa }}</td>
+          <td>{{ vehiculo.codigoContrato }}</td>
+          <td>{{ vehiculo.modelo }}</td>
+          <td>{{ vehiculo.marca }}</td>
+          <td>{{ vehiculo.numTag }}</td>
+          <td>
+            <button class="btn-desafiliar" (click)="confirmarDesafiliacion(vehiculo)">Desafiliar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>

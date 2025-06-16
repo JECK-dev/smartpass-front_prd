@@ -1,0 +1,43 @@
+<div class="config-container">
+    <h2>Configuración</h2>
+  
+    <!-- Notificaciones -->
+    <div class="config-section">
+      <h3>Notificaciones</h3>
+      <label>
+        <input type="checkbox" [(ngModel)]="notificaciones.correo" />
+        Recibir notificaciones por correo
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="notificaciones.telefono" />
+        Recibir notificaciones por teléfono
+      </label>
+    </div>
+  
+    <!-- Contraseña -->
+    <div class="config-section">
+      <h3>Cambiar Contraseña</h3>
+      <input type="password" [(ngModel)]="cambioContrasena.actual" placeholder="Contraseña actual" />
+      <input type="password" [(ngModel)]="cambioContrasena.nueva" placeholder="Nueva contraseña" />
+      <input type="password" [(ngModel)]="cambioContrasena.confirmar" placeholder="Confirmar nueva contraseña" />
+    </div>
+  
+    <!-- Opciones adicionales -->
+    <div class="config-section">
+      <h3>Opciones Adicionales</h3>
+      <label>
+        Idioma:
+        <select [(ngModel)]="idioma">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="modoOscuro" />
+        Activar modo oscuro
+      </label>
+    </div>
+  
+    <button class="btn-guardar" (click)="guardarCambios()">Guardar Cambios</button>
+  </div>
+  

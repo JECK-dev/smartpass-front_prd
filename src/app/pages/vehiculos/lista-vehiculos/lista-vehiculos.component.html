@@ -1,0 +1,132 @@
+<section class="home-section">
+  <h2>Vehículos Registrados</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Placa</th>
+        <th>Contrato</th>
+        <th>Tag</th>
+        <th>Categoría</th>
+        <th>Modelo</th>
+        <th>Color</th>
+        <th>Marca</th>
+        <th>Estado</th>
+       <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let v of vehiculos">
+        <td>{{ v.idVehiculo }}</td>
+        <td>{{ v.placa }}</td>
+        <td>{{ v.idContrato }}</td>
+        <td>{{ v.numTag }}</td>
+        <td>{{ v.categoria }}</td>
+        <td>{{ v.modelo }}</td>
+        <td>{{ v.color }}</td>
+        <td>{{ v.marca }}</td>
+        <td>{{ v.idEstado === 1 ? 'Activo' : 'Inactivo' }}</td>
+        <td>
+        <button class="btn-primario" (click)="abrirModalActualizar(v)">Actualizar</button>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="mostrarFormulario = !mostrarFormulario">
+    {{ mostrarFormulario ? 'Ocultar formulario' : 'Registrar nuevo vehículo' }}
+  </button>
+
+  <div *ngIf="mostrarFormulario">
+    <h3>Registrar nuevo vehículo</h3>
+    <form (ngSubmit)="confirmarRegistroVehiculo()">
+      <div class="form-row">
+        <label>Contrato:</label>
+        <select [(ngModel)]="nuevoVehiculo.idContrato" name="idContrato" required>
+          <option *ngFor="let c of contratos" [value]="c.idContrato">{{ c.nroContrato }}</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Placa:</label>
+        <input type="text" [(ngModel)]="nuevoVehiculo.placa" name="placa" required>
+      </div>
+
+      <div class="form-row">
+        <label>Tag:</label>
+        <select [(ngModel)]="nuevoVehiculo.numTag" name="numTag" required>
+          <option *ngFor="let t of tagsDisponibles" [value]="t.numTag">{{ t.numTag }}</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Categoría:</label>
+        <select [(ngModel)]="nuevoVehiculo.categoria" name="categoria" required>
+          <option *ngFor="let cat of categorias" [value]="cat.idCategoria">
+            Categoría {{ cat.categoria }} - {{ cat.detalles }}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="form-row">
+        <label>Modelo:</label>
+        <input type="text" [(ngModel)]="nuevoVehiculo.modelo" name="modelo" required>
+      </div>
+
+       <div class="form-row">
+        <label>Marca:</label>
+        <input type="text" [(ngModel)]="nuevoVehiculo.marca" name="marca" required>
+      </div>
+
+      <div class="form-row">
+        <label>Color:</label>
+        <input type="text" [(ngModel)]="nuevoVehiculo.color" name="color" required>
+      </div>
+
+     
+
+      <button type="submit">Registrar</button>
+    </form>
+  </div>
+
+  <div class="form-row">
+    <h3>Carga masiva de placas</h3>
+    <input type="file" accept=".xlsx, .xls" />
+    <small>Solo visual, aún no funcional</small>
+  </div>
+  <!-- Modal de actualización -->
+<div class="modal" *ngIf="vehiculoSeleccionado">
+  <div class="modal-contenido">
+    <h3>Actualizar Vehículo</h3>
+    <form (ngSubmit)="guardarActualizacion()">
+      <div class="form-row">
+        <label>Placa:</label>
+        <input type="text" [(ngModel)]="vehiculoSeleccionado.placa" name="placaActualizar" required>
+      </div>
+
+      <div class="form-row">
+        <label>Modelo:</label>
+        <input type="text" [(ngModel)]="vehiculoSeleccionado.modelo" name="modeloActualizar" required>
+      </div>
+
+      <div class="form-row">
+        <label>Marca:</label>
+        <input type="text" [(ngModel)]="vehiculoSeleccionado.marca" name="marcaActualizar" required>
+      </div>
+
+      <div class="form-row">
+        <label>Color:</label>
+        <input type="text" [(ngModel)]="vehiculoSeleccionado.color" name="colorActualizar" required>
+      </div>
+
+      <div class="form-row" style="display: flex; justify-content: flex-end; gap: 1rem;">
+        <button type="submit" class="btn-primario">Guardar</button>
+        <button type="button" class="btn-primario" (click)="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+ 
+</section>

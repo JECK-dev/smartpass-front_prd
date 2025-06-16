@@ -1,0 +1,73 @@
+.home-section {
+  padding: 2rem;
+  background-color: #f8f9fc;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  color: #4e73df;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.formulario {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.6rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.btn-guardar {
+  align-self: flex-end;
+  background-color: #1cc88a;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: 600;
+}
+
+.btn-guardar:hover {
+  background-color: #17a673;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .formulario {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .btn-guardar {
+    width: 100%;
+    align-self: stretch;
+  }
+}

@@ -1,0 +1,96 @@
+<section class="gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Registre una cuenta empresarial</h3>
+              <form (submit)="registrarEmpresa($event)">
+  
+                <!-- RUC y Razón Social -->
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="razonSocial" class="form-control form-control-lg" />
+                      <label class="form-label" for="razonSocial">Razón Social</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="ruc" class="form-control form-control-lg" />
+                      <label class="form-label" for="ruc">RUC</label>
+                    </div>
+                  </div>
+  
+                  
+                </div>
+  
+                <!-- Correo y Teléfono -->
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="email" id="correoEmpresa" class="form-control form-control-lg" />
+                      <label class="form-label" for="correoEmpresa">Correo de contacto</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6 mb-4">
+                    <div class="input-group">
+                      <input type="text" class="form-control form-control-lg" placeholder="+51" id="codigoPaisEmp" maxlength="4" style="max-width: 80px;" />
+                      <input type="tel" id="telefonoEmpresa" class="form-control form-control-lg" placeholder="912345678" />
+                    </div>
+                    <label class="form-label" for="telefonoEmpresa">Teléfono</label>
+                  </div>
+                </div>
+  
+                <!-- Representante (opcional) -->
+                <div class="row">
+
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="representante" class="form-control form-control-lg" />
+                      <label class="form-label" for="razonSocial">Representante (Nombre)</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="dniRepresentante" class="form-control form-control-lg" />
+                      <label class="form-label" for="ruc">nroDocumento</label>
+                    </div>
+                  </div>
+  
+                  
+                </div>
+  
+                <!-- Contraseña -->
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="password" id="passwordEmpresa" class="form-control form-control-lg" />
+                      <label class="form-label" for="passwordEmpresa">Contraseña</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="password" id="confirmarPasswordEmpresa" class="form-control form-control-lg" />
+                      <label class="form-label" for="confirmarPasswordEmpresa">Confirmar Contraseña</label>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Botón -->
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                  Registrar Empresa
+                </button>
+  
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

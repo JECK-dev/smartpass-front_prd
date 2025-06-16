@@ -1,0 +1,151 @@
+.home-section {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  transition: margin-left 0.3s ease;
+}
+
+.home-section.expand {
+  margin-left: 60px;
+}
+
+/* Título y botón */
+.titulo-seccion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.titulo-seccion h2 {
+  font-size: 24px;
+  color: #004f83;
+  font-weight: 700;
+}
+
+.btn-agregar {
+  background-color: #4e73df;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-agregar:hover {
+  background-color: #2e59d9;
+}
+
+/* Filtros */
+.filtros-extendidos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.filtros-extendidos input,
+.filtros-extendidos select {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Botón limpiar */
+.limpiar-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.limpiar-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Tabla */
+.tabla-contratos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-contratos th, .tabla-contratos td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.tabla-contratos th {
+  background-color: #f8f9fc;
+  color: #4e73df;
+  font-weight: 600;
+}
+
+.tabla-contratos tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Estados */
+.activo {
+  color: #1cc88a;
+  font-weight: bold;
+}
+
+.baja {
+  color: #e74a3b;
+  font-weight: bold;
+}
+
+/* Acciones */
+button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-section {
+    padding: 15px;
+  }
+
+  .titulo-seccion {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .filtros-extendidos {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tabla-contratos th,
+  .tabla-contratos td {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .btn-agregar {
+    width: 100%;
+  }
+}
