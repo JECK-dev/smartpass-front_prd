@@ -9,5 +9,6 @@ export interface Vehiculo {
   color: string;
   marca: string;
   idEstado: number;
-  idCliente: number;
+  cliente: {
+    idCliente: number; }
 }

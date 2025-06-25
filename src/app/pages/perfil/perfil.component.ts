@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PerfilService } from '../../services/perfil.service';
 
 
 @Component({
@@ -10,34 +11,53 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
-export class PerfilComponent implements OnInit {
-  modoEdicion = false;
+export class PerfilComponent  implements OnInit {
+  perfil: any = {};
+  perfilEditado: any = {};
+  modoEdicion: boolean = false;
+  idCliente: number = 0;
 
-  perfil = {
-    tipo: 'Empresa', // o 'Individual'
-    nombre: 'SmartPass SAC',
-    documento: '20604588951',
-    correo: 'contacto@smartpass.pe',
-    telefono: '+51 987 654 321'
-  };
+  constructor(private perfilService: PerfilService) {}
 
-  perfilEditado = { ...this.perfil };
+  ngOnInit(): void {
+    this.idCliente = Number(localStorage.getItem('idCliente'));
+    this.obtenerPerfil();
+  }
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  obtenerPerfil(): void {
+    this.perfilService.obtenerPerfil(this.idCliente).subscribe({
+      next: (data) => {
+        this.perfil = data;
+        this.perfilEditado = { ...data };
+      },
+      error: (err) => {
+        console.error('Error al obtener perfil:', err);
+        alert('No se pudo obtener la información del perfil.');
+      }
+    });
+  }
 
   habilitarEdicion(): void {
     this.modoEdicion = true;
     this.perfilEditado = { ...this.perfil };
   }
 
-  guardarCambios(): void {
-    this.perfil = { ...this.perfilEditado };
-    this.modoEdicion = false;
-  }
-
   cancelarEdicion(): void {
     this.modoEdicion = false;
+    this.perfilEditado = { ...this.perfil };
+  }
+
+  guardarCambios(): void {
+    this.perfilService.actualizarPerfil(this.idCliente, this.perfilEditado).subscribe({
+      next: (data) => {
+        this.perfil = data;
+        this.modoEdicion = false;
+        alert('Perfil actualizado correctamente.');
+      },
+      error: (err) => {
+        console.error('Error al actualizar perfil:', err);
+        alert('Ocurrió un error al actualizar el perfil.');
+      }
+    });
   }
 }

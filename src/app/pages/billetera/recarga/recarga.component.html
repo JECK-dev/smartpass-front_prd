@@ -1,43 +1,73 @@
 <section class="home-section">
-    <div class="titulo-seccion">
-      <h2>Recarga de Saldo</h2>
-    </div>
-  
-    <form (ngSubmit)="recargarSaldo()" #recargaForm="ngForm" class="formulario-recarga">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="idContrato">Contrato (Prepago)</label>
-          <select id="idContrato" [(ngModel)]="recarga.idContrato" name="idContrato" required>
-            <option value="" disabled selected>Seleccione contrato</option>
-            <option *ngFor="let contrato of contratosPrepago" [ngValue]="contrato.id">
-              {{ contrato.codigo }} - {{ contrato.cliente }}
-            </option>
-          </select>
-        </div>
-  
-        <div class="form-group">
-          <label for="monto">Monto a recargar (S/)</label>
-          <input type="number" id="monto" [(ngModel)]="recarga.monto" name="monto" required min="1" max="5000" />
-        </div>
-      </div>
-  
+  <div class="titulo-seccion">
+    <h2>Recarga de Saldo</h2>
+  </div>
+
+  <form (ngSubmit)="recargarSaldo()" #recargaForm="ngForm" class="formulario-recarga">
+    <div class="form-row">
       <div class="form-group">
-        <label for="metodo">Método de Pago</label>
-        <div class="metodos-pago">
-          <div
-            class="pago-opcion"
-            *ngFor="let metodo of metodosPago"
-            [class.seleccionado]="recarga.metodo === metodo.codigo"
-            (click)="seleccionarMetodo(metodo.codigo)"
-          >
-            <img [src]="metodo.logo" [alt]="metodo.nombre" />
-            <small>{{ metodo.nombre }}</small>
-          </div>
+        <label for="idContrato">Contrato (Prepago)</label>
+        <select
+          id="idContrato"
+          [(ngModel)]="recarga.idContrato"
+          name="idContrato"
+          required
+          (change)="onContratoSeleccionado()">
+          <option value="" disabled selected>Seleccione contrato</option>
+          <option *ngFor="let contrato of contratosPrepago" [ngValue]="contrato.idContrato">
+            {{ contrato.nroContrato }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="monto">Monto a recargar (S/)</label>
+        <input type="number" id="monto" [(ngModel)]="recarga.monto" name="monto" required min="1" max="5000" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="metodo">Método de Pago</label>
+      <div class="metodos-pago">
+        <div
+          class="pago-opcion"
+          *ngFor="let metodo of metodosPago"
+          [class.seleccionado]="metodoSeleccionado === metodo.codigo"
+          (click)="seleccionarMetodo(metodo.codigo)">
+          <img [src]="metodo.logo" [alt]="metodo.nombre" />
+          <small>{{ metodo.nombre }}</small>
         </div>
       </div>
-  
-      <div class="acciones-formulario">
-        <button type="submit" class="btn-guardar" [disabled]="!recargaForm.valid">Recargar</button>
-      </div>
-    </form>
-  </section>
+    </div>
+
+    <div class="acciones-formulario">
+      <button type="submit" class="btn-guardar" [disabled]="!recargaForm.valid">Recargar</button>
+    </div>
+  </form>
+
+  <div *ngIf="transacciones.length > 0" class="formulario-recarga" style="margin-top: 30px;">
+    <h3>Historial de Transacciones</h3>
+    <table class="table" style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="text-align: left;">Fecha</th>
+          <th>Tipo</th>
+          <th>Monto</th>
+          <th>Saldo Final</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transacciones">
+          <td>{{ t.fecha | date: 'short' }}</td>
+          <td>{{ t.tipoTransaccion }}</td>
+          <td [ngClass]="{ 'text-success': t.monto > 0, 'text-danger': t.monto < 0 }">
+            {{ t.monto | currency:'PEN':'symbol' }}
+          </td>
+          <td>{{ t.saldoFinal | currency:'PEN':'symbol' }}</td>
+          <td>{{ t.descripcion }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

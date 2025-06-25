@@ -32,7 +32,7 @@ export class ListaVehiculosComponent implements OnInit {
     marca: '',
     fechaCreacion: '',
     idEstado: 1,
-    idCliente: Number(localStorage.getItem('idCliente'))
+    cliente: { idCliente: 0 }
   };
 
   constructor(
@@ -44,9 +44,10 @@ export class ListaVehiculosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     const idCliente = Number(localStorage.getItem('idCliente'));
 
-    this.nuevoVehiculo.idCliente = idCliente;
+    this.nuevoVehiculo.cliente.idCliente = idCliente;
 
     this.vehiculoService.getVehiculosPorCliente(idCliente).subscribe(data => {
       this.vehiculos = data;
@@ -113,7 +114,7 @@ export class ListaVehiculosComponent implements OnInit {
       marca: '',
       fechaCreacion: '',
       idEstado: 1,
-      idCliente: Number(localStorage.getItem('idCliente'))
+      cliente: { idCliente: this.nuevoVehiculo.cliente.idCliente }
     };
   }
 

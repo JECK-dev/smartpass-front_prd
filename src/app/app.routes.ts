@@ -17,6 +17,7 @@ import { TagComponent } from './pages/tag/tag.component';
 import { DesafiliacionComponent } from './pages/desafiliacion/desafiliacion.component';
 import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
 import { ModuloConsultasComponent } from './pages/modulo-consultas/modulo-consultas.component';
+import { ListaFacturasComponent } from './pages/facturas/lista-facturas/lista-facturas.component';
 
 
 export const routes: Routes = [
@@ -56,6 +57,7 @@ export const routes: Routes = [
             {path: 'tag', component: TagComponent},
             {path: 'desafiliacion', component: DesafiliacionComponent},
             {path: 'modulo-consultas', component: ModuloConsultasComponent},
+            {path: 'facturas', component: ListaFacturasComponent},
 
         ]
     },

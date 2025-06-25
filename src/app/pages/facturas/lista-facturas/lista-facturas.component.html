@@ -1,0 +1,36 @@
+<div class="factura-container p-3">
+  <h2 class="titulo mb-4">Mis Facturas</h2>
+
+  <div class="table-responsive">
+    <table class="table table-hover text-center shadow rounded">
+      <thead class="text-white" style="background-color: #004f83;">
+        <tr>
+          <th>#</th>
+          <th>N° Contrato</th>
+          <th>Fecha</th>
+          <th>Monto</th>
+          <th>IGV</th>
+          <th>Serie</th>
+          <th>Correlativo</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let factura of facturas; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ factura.contrato?.nroContrato || 'Sin contrato'  }}</td>
+          <td>{{ factura.fechaComprobante | date:'dd/MM/yyyy' }}</td>
+          <td>S/. {{ factura.monto }}</td>
+          <td>S/. {{ factura.igv }}</td>
+          <td>{{ factura.serie }}</td>
+          <td>{{ factura.correlativo }}</td>
+          <td>
+            <button class="btn btn-sm descargar-btn" (click)="descargarFactura(factura.id)">
+              Descargar PDF
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
