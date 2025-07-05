@@ -31,13 +31,20 @@ export class ListaFacturasComponent implements OnInit {
     });
   }
 
-  descargarFactura(idFactura: number) {
-    this.facturaService.descargarFacturaPDF(idFactura).subscribe(blob => {
+  descargar(serie: number, correlativo: string): void {
+    this.facturaService.descargarFactura(serie, correlativo).subscribe(blob => {
+      const filename = `F${serie}-${correlativo}.pdf`;
+
+      // Crear URL y descargar
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Factura_${idFactura}.pdf`;
+      a.download = filename;
       a.click();
+      window.URL.revokeObjectURL(url);
+    }, error => {
+      console.error('Error al descargar la factura', error);
+      alert('No se pudo descargar la factura');
     });
   }
 

@@ -26,9 +26,9 @@ export class RecargaComponent  implements OnInit {
 
   metodosPago = [
     { codigo: 'Yape', nombre: 'Yape', logo: 'assets/yape.png' },
-    { codigo: 'Plin', nombre: 'Plin', logo: 'assets/plin.png' },
-    { codigo: 'Visa', nombre: 'Visa', logo: 'assets/visa.png' },
-    { codigo: 'PagoEfectivo', nombre: 'PagoEfectivo', logo: 'assets/pagoefectivo.png' }
+    { codigo: 'Plin', nombre: 'Plin', logo: 'assets/plin.jpeg' },
+    { codigo: 'Visa', nombre: 'Visa', logo: 'assets/visa.jpg' },
+    { codigo: 'PagoEfectivo', nombre: 'PagoEfectivo', logo: 'assets/pagoEfectivo.png' }
   ];
 
   constructor(private recargaService: RecargaService) {}

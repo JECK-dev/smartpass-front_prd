@@ -25,7 +25,7 @@
           <td>{{ factura.serie }}</td>
           <td>{{ factura.correlativo }}</td>
           <td>
-            <button class="btn btn-sm descargar-btn" (click)="descargarFactura(factura.id)">
+            <button class="btn btn-sm descargar-btn" (click)="descargar(factura.serie, factura.correlativo)">
               Descargar PDF
             </button>
           </td>

@@ -14,10 +14,6 @@ export class FacturaService {
     return this.http.get<any[]>(`${this.baseUrl}/cliente/${idCliente}`);
   }
 
-  descargarFacturaPDF(idFactura: number): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/pdf/${idFactura}`, { responseType: 'blob' });
-  }
-
 
   obtenerFacturasFiltradas(idCliente: number, fechaDesde?: string, fechaHasta?: string, nroContrato?: string) {
         let params: any = { idCliente };
@@ -27,5 +23,12 @@ export class FacturaService {
         if (nroContrato) params.nroContrato = nroContrato;
 
         return this.http.get<any[]>(`${this.baseUrl}/filtrar`, { params });
-    }   
+  }
+  
+  descargarFactura(serie: number, correlativo: string) {
+    const url = `${this.baseUrl}/descargar/${serie}/${correlativo}`;
+    return this.http.get(url, {
+      responseType: 'blob' // <- ¡clave para descargar archivos!
+    });
+  }
 }
