@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
     { title: 'Contrato', value: ' ', icon: 'bx bx-edit', color: '#4e73df', ruta: '/listar-contrato', roles: [1, 2] },
     { title: 'Saldo', value: ' ', icon: 'bx bx-dollar-circle', color: '#1cc88a', ruta: '/recarga', roles: [1, 2] },
     { title: 'Vehículos', value: ' ', icon: 'bx bx-clipboard', color: '#36b9cc', ruta: '/listar-vehiculos', roles: [1, 2] },
+    { title: 'Estados de Cuenta', value: ' ', icon: 'bx bx-clipboard', color: '#36b9cc', ruta: '/estado-cuenta', roles: [1, 2] },
     { title: 'Cruces de Peaje', value: ' ', icon: 'bx bx-car', color: '#f6c23e', ruta: '/his-cruces', roles: [1, 2] },
     { title: 'TAG', value: ' ', icon: 'bx bx-chip', color: '#f6c23e', ruta: '/tag', roles: [1, 3] },
     { title: 'Desafiliación', value: ' ', icon: 'bx bx-chevron-down', color: '#f6c23e', ruta: '/desafiliacion', roles: [1, 3] },
@@ -28,18 +29,4 @@ export class HomeComponent implements OnInit {
     this.cards = this.allCards.filter(card => card.roles.includes(idRol));
   }
 
-
-
-
-
-  /*cards = [
-    { title: 'Contrato', value: '4', icon: 'bx bx-edit', color: '#4e73df', ruta:'/listar-contrato' },
-    { title: 'Saldo', value: 'S/.1,000', icon: 'bx bx-dollar-circle', color: '#1cc88a', ruta:'/recarga'  },
-    { title: 'Vehículos', value: '50', icon: 'bx bx-clipboard', color: '#36b9cc', ruta:'/listar-vehiculos'  },
-    { title: 'Cruces de Peaje', value: '18', icon: 'bx bx-car', color: '#f6c23e', ruta:'/his-cruces'  },
-    { title: 'TAG', value:'100', icon: 'bx bx-chip', color: '#f6c23e', ruta:'/tag'},
-    { title: 'Desafiliación', value:'100', icon: 'bx bx-chevron-down', color: '#f6c23e', ruta:'/desafiliacion'},
-    { title: 'Módulo Consultas', value:'100', icon: 'bx bx-question-mark', color: '#f6c23e', ruta:'/modulo-consultas'},
-  ];
-  */
 }

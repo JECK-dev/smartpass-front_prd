@@ -18,6 +18,7 @@ import { DesafiliacionComponent } from './pages/desafiliacion/desafiliacion.comp
 import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
 import { ModuloConsultasComponent } from './pages/modulo-consultas/modulo-consultas.component';
 import { ListaFacturasComponent } from './pages/facturas/lista-facturas/lista-facturas.component';
+import { EstadoCuentaComponent } from './pages/estado-cuenta/estado-cuenta.component';
 
 
 export const routes: Routes = [
@@ -58,6 +59,7 @@ export const routes: Routes = [
             {path: 'desafiliacion', component: DesafiliacionComponent},
             {path: 'modulo-consultas', component: ModuloConsultasComponent},
             {path: 'facturas', component: ListaFacturasComponent},
+            {path: 'estado-cuenta', component: EstadoCuentaComponent},
 
         ]
     },

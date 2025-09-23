@@ -1,0 +1,19 @@
+h1 {
+  font-weight: bold;
+  color: #004f83;
+}
+
+.card {
+  border-radius: 16px;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .card-header input {
+    width: 100% !important;
+    margin-top: 8px;
+  }
+}

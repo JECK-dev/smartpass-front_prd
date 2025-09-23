@@ -1,30 +1,49 @@
-<section class="home-section">
-    <div class="titulo-seccion">
-      <h2>Consultas y Reclamos</h2>
+<form (ngSubmit)="enviarConsulta(consultaForm)" #consultaForm="ngForm" class="formulario-consulta">
+  <!-- Vehículo -->
+  <div class="form-row">
+    <label for="idVehiculo">Vehículo (placa)</label>
+    <select id="idVehiculo" name="idVehiculo" [(ngModel)]="consulta.idVehiculo" required>
+      <option value="">Seleccione un vehículo</option>
+      <option *ngFor="let v of vehiculos" [value]="v.idVehiculo">
+        {{ v.placa }} <!-- puedes añadir marca/modelo si quieres -->
+      </option>
+    </select>
+    <small *ngIf="consultaForm.submitted && !consulta.idVehiculo" class="err">Seleccione un vehículo.</small>
+  </div>
+
+  <!-- Tipo de reclamo -->
+  <div class="form-row">
+    <label for="idTipoReclamo">Tipo de Consulta</label>
+    <select id="idTipoReclamo" name="idTipoReclamo" [(ngModel)]="consulta.idTipoReclamo" required>
+      <option value="">Seleccione una opción</option>
+      <option *ngFor="let t of tiposReclamo" [value]="t.idTipoReclamo">
+        {{ t.nombre }}
+      </option>
+    </select>
+    <small *ngIf="consultaForm.submitted && !consulta.idTipoReclamo" class="err">Seleccione un tipo.</small>
+  </div>
+
+  <!-- Detalle -->
+  <div class="form-row">
+    <label for="detalle">Detalle</label>
+    <textarea id="detalle" name="detalle" [(ngModel)]="consulta.detalle"
+              required rows="5" maxlength="500"
+              placeholder="Describa su consulta o reclamo..."
+              (input)="contador = consulta.detalle?.length || 0"></textarea>
+    <div class="row-foot">
+      <small>{{ contador }}/500</small>
+      <small *ngIf="consultaForm.submitted && !consulta.detalle" class="err">El detalle es obligatorio.</small>
     </div>
-  
-    <form (ngSubmit)="enviarConsulta()" #consultaForm="ngForm" class="formulario-consulta">
-      <div class="form-row">
-        <label for="tipoConsulta">Tipo de Consulta</label>
-        <select id="tipoConsulta" [(ngModel)]="consulta.tipo" name="tipo" required>
-          <option value="">Seleccione una opción</option>
-          <option value="devolucion">Devolución de Saldo</option>
-          <option value="queja">Queja</option>
-          <option value="incidencia">Reportar Incidencia</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label for="detalle">Detalle</label>
-        <textarea id="detalle" [(ngModel)]="consulta.detalle" name="detalle" required rows="5" placeholder="Describa su consulta o reclamo..."></textarea>
-      </div>
-  
-      <div class="acciones-formulario">
-        <button type="submit" [disabled]="!consultaForm.valid" class="btn-enviar">Enviar Consulta</button>
-      </div>
-  
-      <div *ngIf="mensaje" class="mensaje-confirmacion">
-        {{ mensaje }}
-      </div>
-    </form>
-  </section>
+  </div>
+
+  <!-- Acciones -->
+  <div class="acciones-formulario">
+    <button type="submit" [disabled]="isSubmitting || !consultaForm.form.valid" class="btn-enviar">
+      {{ isSubmitting ? 'Enviando...' : 'Enviar Consulta' }}
+    </button>
+  </div>
+
+  <!-- Mensajes -->
+  <div *ngIf="mensaje" class="mensaje-confirmacion">{{ mensaje }}</div>
+  <div *ngIf="error" class="mensaje-error">{{ error }}</div>
+</form>
