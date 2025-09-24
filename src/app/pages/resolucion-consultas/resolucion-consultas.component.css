@@ -1,0 +1,131 @@
+.home-section {
+  padding: 20px;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.titulo-seccion h2 {
+  color: #004f83;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.tabla-container {
+  overflow-x: auto;
+}
+
+.tabla-reclamos {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f8f9fc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabla-reclamos th, .tabla-reclamos td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.tabla-reclamos th {
+  background-color: #004f83;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-resolver {
+  background-color: #4e73df;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.btn-resolver:hover {
+  background-color: #2e59d9;
+}
+
+.estado-abierto { color: #e74a3b; font-weight: 600; }
+.estado-proceso { color: #f6c23e; font-weight: 600; }
+.estado-cerrado { color: #1cc88a; font-weight: 600; }
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #004f83;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.modal-content textarea, .modal-content select {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.acciones-modal {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-cancelar {
+  background-color: #ccc;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-guardar {
+  background-color: #1cc88a;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-guardar:hover {
+  background-color: #17a673;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .tabla-reclamos th, .tabla-reclamos td {
+    font-size: 12px;
+    padding: 8px;
+  }
+  .modal-content {
+    padding: 15px;
+  }
+}

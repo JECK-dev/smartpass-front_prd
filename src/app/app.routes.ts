@@ -19,6 +19,7 @@ import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recup
 import { ModuloConsultasComponent } from './pages/modulo-consultas/modulo-consultas.component';
 import { ListaFacturasComponent } from './pages/facturas/lista-facturas/lista-facturas.component';
 import { EstadoCuentaComponent } from './pages/estado-cuenta/estado-cuenta.component';
+import { ResolucionConsultasComponent } from './pages/resolucion-consultas/resolucion-consultas.component';
 
 
 export const routes: Routes = [
@@ -60,6 +61,7 @@ export const routes: Routes = [
             {path: 'modulo-consultas', component: ModuloConsultasComponent},
             {path: 'facturas', component: ListaFacturasComponent},
             {path: 'estado-cuenta', component: EstadoCuentaComponent},
+            {path: 'resolucion-consultas', component: ResolucionConsultasComponent}
 
         ]
     },

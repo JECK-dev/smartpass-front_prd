@@ -1,0 +1,70 @@
+<section class="home-section">
+  <div class="titulo-seccion">
+    <h2>Resolución de Consultas y Reclamos</h2>
+  </div>
+
+  <div class="tabla-container">
+    <table class="tabla-reclamos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Vehículo</th>
+          <th>Tipo</th>
+          <th>Detalle</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of reclamos">
+          <td>{{ r.idReclamo }}</td>
+          <td>{{ r.cliente?.nombre }}</td>
+          <td>{{ r.vehiculo?.placa }}</td>
+          <td>{{ r.tipoReclamo?.nombre }}</td>
+          <td>{{ r.detalle }}</td>
+          <td>
+            <span [ngClass]="{
+              'estado-abierto': r.estado === 1,
+              'estado-proceso': r.estado === 2,
+              'estado-cerrado': r.estado === 3
+            }">
+              {{ getEstadoNombre(r.estado) }}
+            </span>
+          </td>
+          <td>{{ r.fechaCreacion | date:'short' }}</td>
+          <td>
+            <button class="btn-resolver" (click)="abrirModal(r)">Resolver</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="reclamoSeleccionado">
+    <div class="modal-content">
+      <h3>Resolver Reclamo #{{ reclamoSeleccionado.idReclamo }}</h3>
+      <p><b>Cliente:</b> {{ reclamoSeleccionado.cliente?.nombre }}</p>
+      <p><b>Vehículo:</b> {{ reclamoSeleccionado.vehiculo?.placa }}</p>
+      <p><b>Tipo:</b> {{ reclamoSeleccionado.tipoReclamo?.nombre }}</p>
+      <p><b>Detalle:</b> {{ reclamoSeleccionado.detalle }}</p>
+
+      <label for="respuesta">Respuesta</label>
+      <textarea id="respuesta" [(ngModel)]="reclamoSeleccionado.respuesta" rows="4"></textarea>
+
+      <label for="estado">Estado</label>
+      <select id="estado" [(ngModel)]="reclamoSeleccionado.estado">
+        <option [value]="1">Abierto</option>
+        <option [value]="2">En proceso</option>
+        <option [value]="3">Cerrado</option>
+      </select>
+
+      <div class="acciones-modal">
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+        <button class="btn-guardar" (click)="guardarResolucion()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</section>

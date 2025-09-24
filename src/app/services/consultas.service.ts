@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 export class ConsultasService {
 
   private base ='http://localhost:8080/api';
-  private base1 = 'http://localhost:8080/api/reclamos';
 
   constructor(private http: HttpClient) {}
 
@@ -20,5 +19,13 @@ export class ConsultasService {
 
   crearReclamo(payload: any): Observable<any> {
     return this.http.post(`${this.base}/reclamos`, payload);
+  }
+
+  getReclamos(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.base}/reclamos/resolucion-reclamo`);
+  }
+
+  actualizarReclamo(reclamo: any): Observable<any> {
+    return this.http.put<any>(`${this.base}/reclamos/${reclamo.idReclamo}`, reclamo);
   }
 }

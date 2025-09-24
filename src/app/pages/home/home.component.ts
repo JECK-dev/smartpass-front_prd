@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit {
     { title: 'Cruces de Peaje', value: ' ', icon: 'bx bx-car', color: '#f6c23e', ruta: '/his-cruces', roles: [1, 2] },
     { title: 'TAG', value: ' ', icon: 'bx bx-chip', color: '#f6c23e', ruta: '/tag', roles: [1, 3] },
     { title: 'Desafiliación', value: ' ', icon: 'bx bx-chevron-down', color: '#f6c23e', ruta: '/desafiliacion', roles: [1, 3] },
-    { title: 'Módulo Consultas', value: ' ', icon: 'bx bx-question-mark', color: '#f6c23e', ruta: '/modulo-consultas', roles: [1] }
+    { title: 'Módulo Consultas', value: ' ', icon: 'bx bx-question-mark', color: '#36b9cc', ruta: '/modulo-consultas', roles: [1,2] },
+    { title: 'Módulo Resolución Consultas', value: ' ', icon: 'bx bx-question-mark', color: '#4e73df', ruta: '/resolucion-consultas', roles: [1, 3] }
   ];
 
   ngOnInit(): void {
