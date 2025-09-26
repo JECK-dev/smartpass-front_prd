@@ -1,94 +1,160 @@
 <div class="container-fluid">
 
-  <!-- Header 
-  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-    <h1 class="h3 text-gray-800 mb-2">Estados de Cuenta</h1>
-    <div>
-      <button class="btn btn-primary me-2 mb-2" (click)="descargarPDF()">
-        📄 Descargar PDF
-      </button>
-      <button class="btn btn-success mb-2" (click)="descargarExcel()">
-        📊 Descargar Excel
-      </button>
-    </div>
-  </div>-->
-
   <!-- Filtros -->
   <div class="row mb-4">
-    <div class="col-md-4 col-12 mb-2">
-      <label>Contrato</label>
-      <select class="form-control" [(ngModel)]="contratoSeleccionado">
-        <option *ngFor="let contrato of contratos" [value]="contrato">{{contrato}}</option>
+    <!-- Tipo de contrato -->
+    <div class="col-md-3 col-12 mb-2">
+      <label>Tipo</label>
+      <select class="form-control" [(ngModel)]="tipoSeleccionado" (change)="cargarContratos()">
+        <option value="PRE">Prepago</option>
+        <option value="POS">Pospago</option>
       </select>
     </div>
-    <div class="col-md-4 col-12 mb-2">
+
+    <!-- Contrato -->
+    <div class="col-md-3 col-12 mb-2">
+      <label>Contrato</label>
+      <select class="form-control" [(ngModel)]="contratoSeleccionado">
+        <option *ngFor="let contrato of contratos" [ngValue]="contrato.idContrato">
+          {{contrato.nroContrato}}
+        </option>
+      </select>
+    </div>
+
+    <!-- Periodo -->
+    <div class="col-md-3 col-12 mb-2">
       <label>Periodo</label>
       <input type="month" class="form-control" [(ngModel)]="periodoSeleccionado">
     </div>
-    <div class="col-md-4 col-12 d-flex align-items-end">
+
+    <!-- Botón -->
+    <div class="col-md-3 col-12 d-flex align-items-end">
       <button class="btn btn-primary w-100" (click)="buscarEstadoCuenta()">
         🔍 Buscar
       </button>
     </div>
   </div>
 
-  <!-- Resumen -->
-  <div class="row text-white mb-4" *ngIf="estadoCuenta">
-    <div class="col-md-3 col-6 mb-3">
-      <div class="card bg-info shadow text-center p-3">
-        <h6>Saldo Inicial</h6>
-        <h4>S/ {{estadoCuenta.saldoInicial | number:'1.2-2'}}</h4>
+  <!-- ============================= -->
+  <!-- Vista PREPAGO -->
+  <!-- ============================= -->
+  <div *ngIf="tipoSeleccionado === 'PRE' && estadoCuenta">
+    <!-- Resumen -->
+    <div class="row text-white mb-4">
+      <div class="col-md-3 col-6 mb-3">
+        <div class="card bg-info shadow text-center p-3">
+          <h6>Saldo Inicial</h6>
+          <h4>S/ {{estadoCuenta.saldoInicial | number:'1.2-2'}}</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="card bg-danger shadow text-center p-3">
+          <h6>Cargos</h6>
+          <h4>S/ {{estadoCuenta.cargos | number:'1.2-2'}}</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="card bg-success shadow text-center p-3">
+          <h6>Abonos</h6>
+          <h4>S/ {{estadoCuenta.abonos | number:'1.2-2'}}</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="card bg-primary shadow text-center p-3">
+          <h6>Saldo Final</h6>
+          <h4>S/ {{estadoCuenta.saldoFinal | number:'1.2-2'}}</h4>
+        </div>
       </div>
     </div>
-    <div class="col-md-3 col-6 mb-3">
-      <div class="card bg-danger shadow text-center p-3">
-        <h6>Cargos</h6>
-        <h4>S/ {{estadoCuenta.cargos | number:'1.2-2'}}</h4>
+
+    <!-- Movimientos -->
+    <div class="card shadow">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Movimientos</h6>
       </div>
-    </div>
-    <div class="col-md-3 col-6 mb-3">
-      <div class="card bg-success shadow text-center p-3">
-        <h6>Abonos</h6>
-        <h4>S/ {{estadoCuenta.abonos | number:'1.2-2'}}</h4>
-      </div>
-    </div>
-    <div class="col-md-3 col-6 mb-3">
-      <div class="card bg-primary shadow text-center p-3">
-        <h6>Saldo Final</h6>
-        <h4>S/ {{estadoCuenta.saldoFinal | number:'1.2-2'}}</h4>
+      <div class="card-body table-responsive">
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Fecha</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+              <th class="text-end">Monto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mov of estadoCuenta.movimientos">
+              <td>{{mov.fecha}}</td>
+              <td>{{mov.tipo}}</td>
+              <td>{{mov.descripcion}}</td>
+              <td [ngClass]="{'text-success': mov.monto > 0, 'text-danger': mov.monto < 0}" class="text-end">
+                {{mov.monto | currency:'PEN':'symbol-narrow'}}
+              </td>
+            </tr>
+            <tr *ngIf="!estadoCuenta.movimientos || estadoCuenta.movimientos.length === 0">
+              <td colspan="4" class="text-center">No hay movimientos registrados</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  <!-- Movimientos -->
-  <div class="card shadow" *ngIf="estadoCuenta">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h6 class="m-0 font-weight-bold text-primary">Movimientos</h6>
-      <input type="text" class="form-control form-control-sm w-25"
-             placeholder="Buscar..." #filtro>
+  <!-- ============================= -->
+  <!-- Vista POSPAGO -->
+  <!-- ============================= -->
+  <div *ngIf="tipoSeleccionado === 'POS' && estadoCuenta">
+    <!-- Resumen -->
+    <div class="row text-white mb-4">
+      <div class="col-md-4 col-6 mb-3">
+        <div class="card bg-danger shadow text-center p-3">
+          <h6>Facturado</h6>
+          <h4>S/ {{estadoCuenta.montoFacturado | number:'1.2-2'}}</h4>
+        </div>
+      </div>
+      <div class="col-md-4 col-6 mb-3">
+        <div class="card bg-success shadow text-center p-3">
+          <h6>Pagado</h6>
+          <h4>S/ {{estadoCuenta.montoPagado | number:'1.2-2'}}</h4>
+        </div>
+      </div>
+      <div class="col-md-4 col-6 mb-3">
+        <div class="card bg-primary shadow text-center p-3">
+          <h6>Saldo Pendiente</h6>
+          <h4>S/ {{estadoCuenta.saldoPendiente | number:'1.2-2'}}</h4>
+        </div>
+      </div>
     </div>
-    <div class="card-body table-responsive">
-      <table class="table table-bordered">
-        <thead class="table-light">
-          <tr>
-            <th>Fecha</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-            <th class="text-end">Monto</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let mov of estadoCuenta.movimientos">
-            <td>{{mov.fecha}}</td>
-            <td>{{mov.tipo}}</td>
-            <td>{{mov.descripcion}}</td>
-            <td [ngClass]="{'text-success': mov.monto > 0, 'text-danger': mov.monto < 0}" class="text-end">
-              {{mov.monto | currency:'PEN':'symbol-narrow'}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+    <!-- Detalles -->
+    <div class="card shadow">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Facturas y Pagos</h6>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Número</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let det of estadoCuenta.detalles">
+              <td>{{det.numeroFactura}}</td>
+              <td>{{det.fechaEmision}}</td>
+              <td>{{det.total | currency:'PEN':'symbol-narrow'}}</td>
+              <td>{{det.estado}}</td>
+            </tr>
+            <tr *ngIf="!estadoCuenta.detalles || estadoCuenta.detalles.length === 0">
+              <td colspan="4" class="text-center">No hay consumos registrados</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
 </div>
-

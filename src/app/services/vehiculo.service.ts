@@ -52,4 +52,10 @@ export class VehiculoService {
   return this.http.put(`${this.baseUrl}/vehiculos/desafiliar/${idVehiculo}`, {}, { responseType: 'text' });
   }
 
+  //Carga MASIVA
+  cargarVehiculos(vehiculos: any[]): Observable<any> {
+    return this.http.post(`${this.baseUrl}/vehiculos/upload-json`, vehiculos);
+  }
+
+
 }

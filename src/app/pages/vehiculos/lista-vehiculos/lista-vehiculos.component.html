@@ -93,8 +93,10 @@
 
   <div class="form-row">
     <h3>Carga masiva de placas</h3>
-    <input type="file" accept=".xlsx, .xls" />
-    <small>Solo visual, aún no funcional</small>
+    <input 
+    type="file" 
+    accept=".xlsx, .xls"
+    (change)="cargarArchivoExcel($event)" />
   </div>
   <!-- Modal de actualización -->
 <div class="modal" *ngIf="vehiculoSeleccionado">

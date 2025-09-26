@@ -49,6 +49,38 @@ export class TagComponent implements OnInit {
   }
 
   cargarArchivoExcel(event: any): void {
-    // lógica existente para subir Excel
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+
+      // leer la primera hoja
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet);
+
+      // 👇 transformar para que coincida con Tag del backend
+      const tags = jsonData.map((row: any) => ({
+        numTag: row.num_tag,            // Excel: num_tag → Java: numTag
+        plaza: { numPlaza: row.id_plaza } // Excel: id_plaza → Java: plaza.numPlaza
+      }));
+
+      console.log('JSON listo para enviar:', tags);
+
+      // enviar al backend
+      this.tagService.cargarTagsDesdeJson(tags).subscribe({
+        next: (response) => {
+          alert(`${response.message} ✅ Total registros: ${response.totalRegistros}`);
+          console.log('Respuesta backend:', response);
+        },
+        error: (err) => {
+          alert('Error al cargar ❌');
+          console.error(err);
+        }
+      });
+    };
+    reader.readAsArrayBuffer(file);
   }
 }

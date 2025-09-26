@@ -20,4 +20,18 @@ export class TagService {
   getTagsDisponibles(): Observable<Tag[]> {
     return this.http.get<Tag[]>(`${this.apiUrl}/disponibles`);
   }
+
+  cargarArchivoExcel(file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.http.post(`${this.apiUrl}/upload`, formData);
+  }
+
+  cargarTagsDesdeJson(data: any[]): Observable<any> {
+  return this.http.post(`${this.apiUrl}/upload-json`, data);
+  } 
+
+ 
+
 }

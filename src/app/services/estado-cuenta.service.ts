@@ -1,32 +1,38 @@
-// src/app/services/estado-cuenta.service.ts
-
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { EstadoCuenta } from '../models/estado-cuenta.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstadoCuentaService {
-  private api = 'http://localhost:8080/api/transitos';
 
-  constructor(private http: HttpClient) {}
+  private baseUrl = 'http://localhost:8080/api/estado-cuenta'; // Ajusta al dominio real
 
-  getContratos(clienteId: number): Observable<any[]> {
-    const params = new HttpParams().set('clienteId', clienteId);
-    return this.http.get<any[]>(`${this.api}/contratos`, { params });
+  constructor(private http: HttpClient) { }
+
+  getPrepago(idContrato: number, periodo: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/prepago/${idContrato}?periodo=${periodo}`);
   }
 
-  getEstadoCuenta(contratoId: number, periodo: string, buscar?: string, page=0, size=100): Observable<any> {
-    let params = new HttpParams()
-      .set('contratoId', contratoId)
-      .set('periodo', periodo)
-      .set('page', page)
-      .set('size', size);
-    if (buscar && buscar.trim().length) {
-      params = params.set('buscar', buscar.trim());
-    }
-    return this.http.get<any>(`${this.api}/estados-cuenta`, { params });
+  getPospago(idContrato: number, periodo: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/pospago/${idContrato}?periodo=${periodo}`);
   }
+
+  getMovimientos(idContrato: number, periodo: string) {
+    return this.http.get<any[]>(`${this.baseUrl}/movimientos/contrato/${idContrato}?periodo=${periodo}`);
+  }
+
+  getMovimientosPorCliente(idCliente: number, idContrato: number, periodo: string) {
+    return this.http.get<any[]>(`${this.baseUrl}/movimientos/cliente/${idCliente}/contrato/${idContrato}?periodo=${periodo}`);
+  }
+
+  getContratosPorTipo(tipo: string) {
+    return this.http.get<any[]>(`http://localhost:8080/api/contratos/tipo/${tipo}`);
+  }
+
+  getContratosPorTipoCliente(tipo: string, idCliente: number) {
+    return this.http.get<any[]>(`http://localhost:8080/api/contratos/tipo/${tipo}/cliente/${idCliente}`);
+  }
+
 }

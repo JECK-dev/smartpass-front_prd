@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CategoriaService } from '../../../services/categoria.service';
 import { VehiculoService } from '../../../services/vehiculo.service';
 import { HttpClient } from '@angular/common/http';
+import * as XLSX from 'xlsx';
 //import { VehiculoApiService } from '../../../services/vehiculo-api.service';
 
 @Component({
@@ -143,6 +144,49 @@ export class ListaVehiculosComponent implements OnInit {
         console.error('Error al actualizar el vehículo', err);
       }
     });
+  }
+
+
+  cargarArchivoExcel(event: any): void {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const data: Uint8Array = new Uint8Array(e.target.result);
+      const workbook: XLSX.WorkBook = XLSX.read(data, { type: 'array' });
+
+      // primera hoja
+      const nombreHoja = workbook.SheetNames[0];
+      const hoja = workbook.Sheets[nombreHoja];
+
+      // Excel → JSON
+      const vehiculos: any[] = XLSX.utils.sheet_to_json(hoja, { raw: true });
+
+      // 👇 obtener idCliente del localStorage
+      const idCliente = Number(localStorage.getItem('idCliente'));
+
+      // añadir idCliente a cada registro
+      const vehiculosConCliente = vehiculos.map(v => ({
+        ...v,
+        idCliente: idCliente
+      }));
+
+      console.log("JSON final:", vehiculosConCliente);
+
+      this.vehiculoService.cargarVehiculos(vehiculosConCliente).subscribe({
+        next: (res) => {
+          alert('Vehículos cargados correctamente 🚀');
+          console.log(res);
+        },
+        error: (err) => {
+          alert('Error al cargar los vehículos ❌');
+          console.error(err);
+        }
+      });
+    };
+
+    reader.readAsArrayBuffer(file);
   }
 
 
