@@ -1,5 +1,19 @@
 <div class="container-fluid">
 
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h6 class="m-0 font-weight-bold text-primary">Movimientos</h6>
+    <div>
+      <button class="btn btn-sm btn-success me-2" (click)="exportarExcel()">
+        📊 Excel
+      </button>
+      <button class="btn btn-sm btn-danger" (click)="exportarPDF()">
+        📄 PDF
+      </button>
+    </div>
+  </div>
+
+
+
   <!-- Filtros -->
   <div class="row mb-4">
     <!-- Tipo de contrato -->
@@ -44,25 +58,25 @@
       <div class="col-md-3 col-6 mb-3">
         <div class="card bg-info shadow text-center p-3">
           <h6>Saldo Inicial</h6>
-          <h4>S/ {{estadoCuenta.saldoInicial | number:'1.2-2'}}</h4>
+          <h4>S/ {{estadoCuenta.saldoInicial || 0 | number:'1.2-2'}}</h4>
         </div>
       </div>
       <div class="col-md-3 col-6 mb-3">
         <div class="card bg-danger shadow text-center p-3">
           <h6>Cargos</h6>
-          <h4>S/ {{estadoCuenta.cargos | number:'1.2-2'}}</h4>
+          <h4>S/ {{estadoCuenta.cargos || 0 | number:'1.2-2'}}</h4>
         </div>
       </div>
       <div class="col-md-3 col-6 mb-3">
         <div class="card bg-success shadow text-center p-3">
           <h6>Abonos</h6>
-          <h4>S/ {{estadoCuenta.abonos | number:'1.2-2'}}</h4>
+          <h4>S/ {{estadoCuenta.abonos || 0 | number:'1.2-2'}}</h4>
         </div>
       </div>
       <div class="col-md-3 col-6 mb-3">
         <div class="card bg-primary shadow text-center p-3">
           <h6>Saldo Final</h6>
-          <h4>S/ {{estadoCuenta.saldoFinal | number:'1.2-2'}}</h4>
+          <h4>S/ {{estadoCuenta.saldoFinal || 0 | number:'1.2-2'}}</h4>
         </div>
       </div>
     </div>
@@ -109,19 +123,19 @@
       <div class="col-md-4 col-6 mb-3">
         <div class="card bg-danger shadow text-center p-3">
           <h6>Facturado</h6>
-          <h4>S/ {{estadoCuenta.montoFacturado | number:'1.2-2'}}</h4>
+          <h4>S/ {{estadoCuenta.montoFacturado || 0 | number:'1.2-2'}}</h4>
         </div>
       </div>
       <div class="col-md-4 col-6 mb-3">
         <div class="card bg-success shadow text-center p-3">
           <h6>Pagado</h6>
-          <h4>S/ {{estadoCuenta.montoPagado | number:'1.2-2'}}</h4>
+          <h4>S/ {{estadoCuenta.montoPagado || 0 | number:'1.2-2'}}</h4>
         </div>
       </div>
       <div class="col-md-4 col-6 mb-3">
         <div class="card bg-primary shadow text-center p-3">
           <h6>Saldo Pendiente</h6>
-          <h4>S/ {{estadoCuenta.saldoPendiente | number:'1.2-2'}}</h4>
+          <h4>S/ {{estadoCuenta.saldoPendiente || 0 | number:'1.2-2'}}</h4>
         </div>
       </div>
     </div>
@@ -156,5 +170,6 @@
       </div>
     </div>
   </div>
+
 
 </div>

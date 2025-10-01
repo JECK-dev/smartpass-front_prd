@@ -14,11 +14,11 @@ import { Contrato } from '../../../models/contrato.model';
 })
 export class CrearContratoComponent implements OnInit {
 
+  
   contrato: any = {
-    idContrato: this.generarId(),
     tipoPago: '',
-    subtipoContrato: '',
-    fechaCreacion: this.obtenerFechaActual()
+    fechaCreacion: this.obtenerFechaActual(),
+    idTipoFactura: 1 // valor por defecto = Factura
   };
 
   nombreUsuario: string = '';
@@ -45,12 +45,15 @@ export class CrearContratoComponent implements OnInit {
 
     const nuevoContrato: Partial<Contrato> = {
       idCliente: idCliente,
-      saldo: tipoContrato === 'PRE' ? 0 : 0,
+      saldo: 0,
       tipoContrato: tipoContrato,
       fechaCreacion: new Date(this.contrato.fechaCreacion).toISOString(),
       fechaModificacion: new Date().toISOString(),
-      idEstado: 1
+      idEstado: 1,
+      idTipoFactura: Number( this.contrato.idTipoFactura)
     };
+
+    console.log('Contrato a enviar:', nuevoContrato); // 👀 ver en consola
 
     this.contratoService.crearContrato(nuevoContrato).subscribe({
       next: () => {
@@ -62,10 +65,6 @@ export class CrearContratoComponent implements OnInit {
         alert('Hubo un problema al crear el contrato.');
       }
     });
-  }
-
-  generarId(): number {
-    return Math.floor(1000 + Math.random() * 9000);
   }
 
   obtenerFechaActual(): string {

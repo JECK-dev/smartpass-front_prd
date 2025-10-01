@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ContratoService {
+  darBaja(idContrato: number) {
+    throw new Error('Method not implemented.');
+  }
 
   private apiUrl = 'http://localhost:8080/api/contratos';
 
@@ -30,4 +33,9 @@ export class ContratoService {
   actualizarContrato(id: number, contrato: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, contrato);
   }
+
+   darDeBaja(idContrato: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${idContrato}/baja`, {});
+  }
+
 }

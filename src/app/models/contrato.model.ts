@@ -7,5 +7,6 @@ export interface Contrato {
   fechaCreacion: string;
   fechaModificacion: string;
   idEstado: number;
+  idTipoFactura: number;
 }
 

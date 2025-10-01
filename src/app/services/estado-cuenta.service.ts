@@ -11,14 +11,6 @@ export class EstadoCuentaService {
 
   constructor(private http: HttpClient) { }
 
-  getPrepago(idContrato: number, periodo: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/prepago/${idContrato}?periodo=${periodo}`);
-  }
-
-  getPospago(idContrato: number, periodo: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/pospago/${idContrato}?periodo=${periodo}`);
-  }
-
   getMovimientos(idContrato: number, periodo: string) {
     return this.http.get<any[]>(`${this.baseUrl}/movimientos/contrato/${idContrato}?periodo=${periodo}`);
   }
@@ -34,5 +26,32 @@ export class EstadoCuentaService {
   getContratosPorTipoCliente(tipo: string, idCliente: number) {
     return this.http.get<any[]>(`http://localhost:8080/api/contratos/tipo/${tipo}/cliente/${idCliente}`);
   }
+
+  // ==== PREPAGO ====
+  getPrepagoResumen(idContrato: number, periodo: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/prepago/resumen/${idContrato}`, {
+      params: { periodo }
+    });
+  }
+
+  getPrepagoMovimientos(idContrato: number, periodo: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/prepago/${idContrato}`, {
+      params: { periodo }
+    });
+  }
+
+  // ==== POSPAGO ====
+  getPospagoResumen(idContrato: number, periodo: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/pospago/resumen/${idContrato}`, {
+      params: { periodo }
+    });
+  }
+
+  getPospagoMovimientos(idContrato: number, periodo: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/pospago/${idContrato}`, {
+      params: { periodo }
+    });
+  }
+
 
 }

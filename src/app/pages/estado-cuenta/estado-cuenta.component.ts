@@ -3,6 +3,13 @@ import { EstadoCuentaService } from '../../services/estado-cuenta.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+
 @Component({
   selector: 'app-estado-cuenta',
   imports: [CommonModule,FormsModule],
@@ -34,25 +41,78 @@ export class EstadoCuentaComponent implements OnInit {
   }
 
   buscarEstadoCuenta() {
-    if (!this.contratoSeleccionado || !this.periodoSeleccionado) return;
+  if (!this.contratoSeleccionado || !this.periodoSeleccionado) return;
+
+
+  const periodo = this.periodoSeleccionado.replace('-', '');
 
     if (this.tipoSeleccionado === 'PRE') {
-      this.estadoCuentaService.getPrepago(this.contratoSeleccionado, this.periodoSeleccionado)
-        .subscribe(data => {
-          if (data && data.length > 0) {
-            this.estadoCuenta = data[0];   // ✅ tomar el primer objeto
-            this.estadoCuenta.movimientos = []; // ⚠️ vacío, hasta que consultes los detalles
-          }
+      this.estadoCuentaService.getPrepagoResumen(this.contratoSeleccionado, periodo)
+        .subscribe(resumen => {
+          this.estadoCuenta = resumen;
+          this.estadoCuenta.movimientos = [];
+
+          this.estadoCuentaService.getPrepagoMovimientos(this.contratoSeleccionado, periodo)
+            .subscribe(movs => this.estadoCuenta.movimientos = movs);
         });
     } else {
-      this.estadoCuentaService.getPospago(this.contratoSeleccionado, this.periodoSeleccionado)
-        .subscribe(data => {
-          if (data && data.length > 0) {
-            this.estadoCuenta = data[0];
-            this.estadoCuenta.detalles = []; // ⚠️ vacío, hasta que consultes los detalles
-          }
+      this.estadoCuentaService.getPospagoResumen(this.contratoSeleccionado, periodo)
+        .subscribe(resumen => {
+          this.estadoCuenta = resumen;
+          this.estadoCuenta.detalles = [];
+
+          this.estadoCuentaService.getPospagoMovimientos(this.contratoSeleccionado, periodo)
+            .subscribe(det => this.estadoCuenta.detalles = det);
         });
     }
   }
+
+  //Exportar reporte Excel y PDF
+
+  exportarExcel(): void {
+    let data: any[] = [];
+
+    if (this.tipoSeleccionado === 'PRE') {
+      data = this.estadoCuenta?.movimientos || [];
+    } else if (this.tipoSeleccionado === 'POS') {
+      data = this.estadoCuenta?.detalles || [];
+    }
+
+    // Generar hoja Excel
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'EstadoCuenta');
+
+    // Descargar archivo
+    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'estado_cuenta.xlsx');
+  }
+
+  exportarPDF(): void {
+    const doc = new jsPDF();
+    doc.setFontSize(14);
+    doc.text('Estado de Cuenta - SmartPass', 14, 20);
+
+    if (this.tipoSeleccionado === 'PRE') {
+      autoTable(doc, {
+        head: [['Fecha', 'Tipo', 'Descripción', 'Monto']],
+        body: this.estadoCuenta?.movimientos.map((m: any) => [
+          m.fecha, m.tipo, m.descripcion, m.monto
+        ]) || []
+      });
+    } else if (this.tipoSeleccionado === 'POS') {
+      autoTable(doc, {
+        head: [['Número', 'Fecha', 'Total', 'Estado']],
+        body: this.estadoCuenta?.detalles.map((d: any) => [
+          d.numeroFactura, d.fechaEmision, d.total, d.estado
+        ]) || []
+      });
+    }
+
+   doc.save('estado_cuenta.pdf');
+  }
+
+
 
 }

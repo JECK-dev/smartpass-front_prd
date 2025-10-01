@@ -17,6 +17,15 @@
     </div>
 
     <div class="form-group">
+      <label for="idTipoFactura">Tipo de facturación:</label>
+      <select id="idTipoFactura" [(ngModel)]="contrato.idTipoFactura" name="idTipoFactura" required>
+        <option [ngValue]="null" disabled>Seleccionar tipo de facturación</option>
+        <option [ngValue]="1">Factura</option>
+        <option [ngValue]="2">Boleta</option>
+      </select>
+    </div>
+
+    <div class="form-group">
       <label for="fechaCreacion">Fecha de creación:</label>
       <input type="date" id="fechaCreacion" [(ngModel)]="contrato.fechaCreacion" name="fechaCreacion" required>
     </div>

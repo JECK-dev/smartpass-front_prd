@@ -22,14 +22,25 @@ export class ListaContratosComponent implements OnInit {
   constructor(private contratoService: ContratoService, private router: Router) {}
 
   ngOnInit(): void {
+    this.cargarContratosPorCliente();
+  }
+
+  // ✅ Nuevo método
+  cargarContratosPorCliente(): void {
     const idCliente = Number(localStorage.getItem('idCliente'));
     if (!idCliente) {
       alert('ID de cliente no encontrado en la sesión');
       return;
     }
 
-    this.contratoService.getContratosPorCliente(idCliente).subscribe(data => {
-      this.contratos = data;
+    this.contratoService.getContratosPorCliente(idCliente).subscribe({
+      next: (data) => {
+        this.contratos = data;
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al cargar contratos');
+      }
     });
   }
 
@@ -55,7 +66,17 @@ export class ListaContratosComponent implements OnInit {
   }
 
   darDeBaja(contrato: Contrato): void {
-    contrato.idEstado = 2; // Visualmente lo marcamos como Baja
-    // Aquí puedes agregar un llamado PUT si quieres persistirlo
+    if (!confirm(`¿Seguro que deseas dar de baja el contrato ${contrato.nroContrato}?`)) return;
+
+    this.contratoService.darDeBaja(contrato.idContrato).subscribe({
+      next: () => {
+        alert(`Contrato ${contrato.nroContrato} dado de baja correctamente`);
+        this.cargarContratosPorCliente(); // ✅ ahora sí existe
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al dar de baja contrato');
+      }
+    });
   }
 }

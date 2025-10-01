@@ -20,8 +20,6 @@
   <table class="tabla-contratos">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>ID Cliente</th>
         <th>Nro Contrato</th>
         <th>Tipo</th>
         <th>Saldo</th>
@@ -33,8 +31,6 @@
     </thead>
     <tbody>
       <tr *ngFor="let contrato of contratosFiltrados">
-        <td>{{ contrato.idContrato }}</td>
-        <td>{{ contrato.idCliente }}</td>
         <td>{{ contrato.nroContrato }}</td>
         <td>{{ contrato.tipoContrato }}</td>
         <td>S/. {{ contrato.saldo | number:'1.0-2' }}</td>
