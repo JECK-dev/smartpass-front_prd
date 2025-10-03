@@ -1,96 +1,157 @@
 <section class="gradient-custom">
-    <div class="container py-5 h-100">
-      <div class="row justify-content-center align-items-center h-100">
-        <div class="col-12 col-lg-9 col-xl-7">
-          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-            <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Registre una cuenta empresarial</h3>
-              <form (submit)="registrarEmpresa($event)">
-  
-                <!-- RUC y Razón Social -->
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="razonSocial" class="form-control form-control-lg" />
-                      <label class="form-label" for="razonSocial">Razón Social</label>
-                    </div>
-                  </div>
+  <div class="container py-5 h-100">
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Registre una cuenta empresarial</h3>
 
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="ruc" class="form-control form-control-lg" />
-                      <label class="form-label" for="ruc">RUC</label>
-                    </div>
-                  </div>
-  
-                  
-                </div>
-  
-                <!-- Correo y Teléfono -->
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="email" id="correoEmpresa" class="form-control form-control-lg" />
-                      <label class="form-label" for="correoEmpresa">Correo de contacto</label>
-                    </div>
-                  </div>
-  
-                  <div class="col-md-6 mb-4">
-                    <div class="input-group">
-                      <input type="text" class="form-control form-control-lg" placeholder="+51" id="codigoPaisEmp" maxlength="4" style="max-width: 80px;" />
-                      <input type="tel" id="telefonoEmpresa" class="form-control form-control-lg" placeholder="912345678" />
-                    </div>
-                    <label class="form-label" for="telefonoEmpresa">Teléfono</label>
+            <form (submit)="registrarEmpresa($event)" class="needs-validation" novalidate>
+
+              <!-- RUC y Razón Social -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="razonSocial" class="form-control form-control-lg" required />
+                    <label class="form-label" for="razonSocial">Razón Social</label>
                   </div>
                 </div>
-  
-                <!-- Representante (opcional) -->
-                <div class="row">
 
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="representante" class="form-control form-control-lg" />
-                      <label class="form-label" for="razonSocial">Representante (Nombre)</label>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="dniRepresentante" class="form-control form-control-lg" />
-                      <label class="form-label" for="ruc">nroDocumento</label>
-                    </div>
-                  </div>
-  
-                  
-                </div>
-  
-                <!-- Contraseña -->
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="password" id="passwordEmpresa" class="form-control form-control-lg" />
-                      <label class="form-label" for="passwordEmpresa">Contraseña</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="password" id="confirmarPasswordEmpresa" class="form-control form-control-lg" />
-                      <label class="form-label" for="confirmarPasswordEmpresa">Confirmar Contraseña</label>
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input 
+                      type="text" 
+                      id="ruc" 
+                      class="form-control form-control-lg" 
+                      required 
+                      pattern="[0-9]{11}" 
+                      maxlength="11"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    />
+                    <label class="form-label" for="ruc">RUC</label>
+                    <div class="invalid-feedback">
+                      El RUC debe contener solo números y tener 11 dígitos.
                     </div>
                   </div>
                 </div>
-  
-                <!-- Botón -->
+              </div>
 
-                <button type="submit" class="btn btn-primary btn-lg w-100">
-                  Registrar Empresa
-                </button>
-  
-              </form>
-            </div>
+              <!-- Correo y Teléfono -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="email" id="correoEmpresa" class="form-control form-control-lg" required />
+                    <label class="form-label" for="correoEmpresa">Correo de contacto</label>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <div class="input-group">
+                    <!-- Código de país -->
+                    <input 
+                      type="text" 
+                      class="form-control form-control-lg" 
+                      placeholder="+51" 
+                      id="codigoPaisEmp" 
+                      maxlength="4" 
+                      style="max-width: 80px;" 
+                      required
+                    />
+
+                    <!-- Teléfono -->
+                    <input 
+                      type="text" 
+                      id="telefonoEmpresa" 
+                      class="form-control form-control-lg" 
+                      placeholder="912345678"
+                      required
+                      maxlength="9"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    />
+                  </div>
+                  <label class="form-label" for="telefonoEmpresa">Teléfono</label>
+                  <div class="invalid-feedback">
+                    El teléfono debe contener solo números (9 dígitos).
+                  </div>
+                </div>
+              </div>
+
+              <!-- Representante -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="representante" class="form-control form-control-lg" required />
+                    <label class="form-label" for="representante">Representante (Nombre)</label>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input 
+                      type="text" 
+                      id="dniRepresentante" 
+                      class="form-control form-control-lg" 
+                      required
+                      pattern="[0-9]{8}" 
+                      maxlength="8"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    />
+                    <label class="form-label" for="dniRepresentante">Número de Documento</label>
+                    <div class="invalid-feedback">
+                      El DNI debe contener 8 números.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contraseña -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input 
+                      type="password" 
+                      id="passwordEmpresa" 
+                      class="form-control form-control-lg" 
+                      required
+                      minlength="8"
+                      pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[&#64;$!%*?&])[A-Za-z\d&#64;$!%*?&]{8,}$"
+                    />
+                    <label class="form-label" for="passwordEmpresa">Contraseña</label>
+                    <div class="form-text">
+                      La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, 
+                      un número y un carácter especial (&#64;$!%*?&).
+                    </div>
+                    <div class="invalid-feedback">
+                      La contraseña no cumple con los requisitos.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input 
+                      type="password" 
+                      id="confirmarPasswordEmpresa" 
+                      class="form-control form-control-lg" 
+                      required
+                    />
+                    <label class="form-label" for="confirmarPasswordEmpresa">Confirmar Contraseña</label>
+                    <div class="invalid-feedback">
+                      Las contraseñas no coinciden.
+                    </div>
+                  </div>
+                </div>
+</div>
+
+              <!-- Botón -->
+              <button type="submit" class="btn btn-primary btn-lg w-100">
+                Registrar Empresa
+              </button>
+
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>

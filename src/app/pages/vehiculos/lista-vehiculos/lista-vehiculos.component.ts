@@ -26,7 +26,6 @@ export class ListaVehiculosComponent implements OnInit {
   nuevoVehiculo = {
     idContrato: '',
     placa: '',
-    numTag: '',
     categoria: '',
     modelo: '',
     color: '',
@@ -72,7 +71,7 @@ export class ListaVehiculosComponent implements OnInit {
 
   confirmarRegistroVehiculo(): void {
     const confirmacion = confirm(
-      `¿Deseas registrar el vehículo con placa ${this.nuevoVehiculo.placa}, marca ${this.nuevoVehiculo.marca}, y TAG ${this.nuevoVehiculo.numTag}?`
+      `¿Deseas registrar el vehículo con placa ${this.nuevoVehiculo.placa}, marca ${this.nuevoVehiculo.marca}?`
     );
     if (confirmacion) {
       this.registrarVehiculo();
@@ -81,21 +80,28 @@ export class ListaVehiculosComponent implements OnInit {
 
   registrarVehiculo(): void {
     this.nuevoVehiculo.fechaCreacion = new Date().toISOString();
-    const tagSeleccionado = this.nuevoVehiculo.numTag;
+    console.log("Datos que se enviarán al backend:", this.nuevoVehiculo);
 
     this.vehiculoService.registrarVehiculo(this.nuevoVehiculo).subscribe({
-      next: () => {
-        const fechaAsignacion = new Date().toISOString();
-        this.vehiculoService.actualizarTagComoUsado(tagSeleccionado, fechaAsignacion).subscribe();
-        this.recargarVehiculos();
-        this.resetFormulario();
+      next: (res) => {
+        if (res.mensaje) {
+          alert(res.mensaje);
+          this.recargarVehiculos();
+          this.resetFormulario();
+        }
       },
       error: (err) => {
+        if (err.error && err.error.error) {
+          alert(err.error.error); // mensaje del SP
+        } else {
+          alert("Error inesperado al registrar vehículo");
+        }
         console.error('Error al registrar vehículo:', err);
-        alert('Error al registrar vehículo');
       }
     });
+
   }
+
 
   recargarVehiculos(): void {
     const idCliente = Number(localStorage.getItem('idCliente'));
@@ -108,7 +114,6 @@ export class ListaVehiculosComponent implements OnInit {
     this.nuevoVehiculo = {
       idContrato: '',
       placa: '',
-      numTag: '',
       categoria: '',
       modelo: '',
       color: '',

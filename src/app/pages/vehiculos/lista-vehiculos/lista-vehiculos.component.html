@@ -54,13 +54,6 @@
       </div>
 
       <div class="form-row">
-        <label>Tag:</label>
-        <select [(ngModel)]="nuevoVehiculo.numTag" name="numTag" required>
-          <option *ngFor="let t of tagsDisponibles" [value]="t.numTag">{{ t.numTag }}</option>
-        </select>
-      </div>
-
-      <div class="form-row">
         <label>Categoría:</label>
         <select [(ngModel)]="nuevoVehiculo.categoria" name="categoria" required>
           <option *ngFor="let cat of categorias" [value]="cat.idCategoria">

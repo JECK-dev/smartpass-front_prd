@@ -20,39 +20,54 @@ export class RegistroEmpresaComponent {
 
   registrarEmpresa(event: Event): void {
     event.preventDefault();
+    const form = event.target as HTMLFormElement;
 
     const ruc = (document.getElementById('ruc') as HTMLInputElement).value.trim();
     const razonSocial = (document.getElementById('razonSocial') as HTMLInputElement).value.trim();
     const correo = (document.getElementById('correoEmpresa') as HTMLInputElement).value.trim();
-    const telefono = parseInt((document.getElementById('telefonoEmpresa') as HTMLInputElement).value, 10);
+    const telefonoStr = (document.getElementById('telefonoEmpresa') as HTMLInputElement).value.trim();
+    const telefono = telefonoStr ? parseInt(telefonoStr, 10) : 0;
     const representante = (document.getElementById('representante') as HTMLInputElement).value.trim();
-    const password = (document.getElementById('passwordEmpresa') as HTMLInputElement).value;
-    const confirmarPassword = (document.getElementById('confirmarPasswordEmpresa') as HTMLInputElement).value;
+    const dniRepresentante = (document.getElementById('dniRepresentante') as HTMLInputElement).value.trim();
+    const passwordInput = document.getElementById('passwordEmpresa') as HTMLInputElement;
+    const confirmPasswordInput = document.getElementById('confirmarPasswordEmpresa') as HTMLInputElement;
 
-    if (password !== confirmarPassword) {
-      alert('Las contraseñas no coinciden.');
+    // 🔹 Validar coincidencia de contraseñas
+    if (passwordInput.value !== confirmPasswordInput.value) {
+      confirmPasswordInput.setCustomValidity("Las contraseñas no coinciden");
+    } else {
+      confirmPasswordInput.setCustomValidity("");
+    }
+
+    // 🔹 Validación de formulario
+    if (!form.checkValidity()) {
+      form.classList.add('was-validated');
       return;
     }
 
+    // 🔹 Construir cliente
     const cliente: Cliente = {
       nombre: razonSocial,
-      apellido: 'SAC',
+      apellido: 'SAC',   // o podrías dejarlo vacío si tu modelo lo permite
       numDocumento: ruc,
       telefono,
       correo
     };
 
+    // 🔹 Construir usuario
     const usuario: Usuario = {
       nombre: representante,
-      apellido: representante, // ← Se repite el mismo valor aquí
-      dni: ruc,
+      apellido: '', // o separar nombre/apellido real
+      dni: dniRepresentante,
       numTelefono: telefono,
       usuario: correo,
-      password
+      password: passwordInput.value
     };
 
+    // 🔹 Payload final
     const payload: RegistroRequest = { cliente, usuario };
 
+    // 🔹 Llamada al servicio
     this.registroService.registrarEmpresa(payload).subscribe({
       next: () => {
         alert('Registro empresarial exitoso.');
@@ -65,3 +80,5 @@ export class RegistroEmpresaComponent {
     });
   }
 }
+
+

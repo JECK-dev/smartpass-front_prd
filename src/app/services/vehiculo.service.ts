@@ -16,10 +16,15 @@ export class VehiculoService {
     return this.http.get<any[]>(`${this.baseUrl}/vehiculos/cliente/${idCliente}`);
   }
 
+
+
+
   // Registrar nuevo vehículo
+
   registrarVehiculo(vehiculo: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/vehiculos`, vehiculo);
   }
+
 
   // Obtener tags disponibles
   getTagsDisponibles(): Observable<any[]> {
