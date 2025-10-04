@@ -20,6 +20,7 @@ import { ModuloConsultasComponent } from './pages/modulo-consultas/modulo-consul
 import { ListaFacturasComponent } from './pages/facturas/lista-facturas/lista-facturas.component';
 import { EstadoCuentaComponent } from './pages/estado-cuenta/estado-cuenta.component';
 import { ResolucionConsultasComponent } from './pages/resolucion-consultas/resolucion-consultas.component';
+import { ResetPasswordComponent } from './pages/reset-password_link/reset-password.component';
 
 
 export const routes: Routes = [
@@ -43,6 +44,9 @@ export const routes: Routes = [
     },
     {
         path:'recuperar-contrasena', component: RecuperarContrasenaComponent
+    },
+    {
+        path:'reset-password', component: ResetPasswordComponent
     },
     {
         path:'',

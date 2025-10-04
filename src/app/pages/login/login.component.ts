@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,16 +19,17 @@ import { HttpClient } from '@angular/common/http';
 export class LoginComponent implements OnInit {
   formLogin!: FormGroup;
   mensajeError: string = '';
+  cargando = false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.formLogin = this.fb.group({
-      documento: ['', Validators.required],
+      documento: ['', Validators.required], // tu input visible
       password: ['', Validators.required]
     });
   }
@@ -38,26 +40,31 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const datosLogin = {
-      documento: this.formLogin.value.documento.trim(),
+    this.mensajeError = '';
+    this.cargando = true;
+
+    // Mapear documento -> usuario (el back espera "usuario")
+    const credenciales = {
+      usuario: this.formLogin.value.documento.trim(),
       password: this.formLogin.value.password
     };
 
-    this.http.post<any>('http://localhost:8080/api/auth/login', datosLogin).subscribe({
-      next: (respuesta) => {
-        // Guardar info útil en localStorage
-        localStorage.setItem('idCliente', respuesta.idCliente);
-        localStorage.setItem('idUsuario', respuesta.idUsuario);
-        localStorage.setItem('nombreUsuario', respuesta.nombre + ' ' + respuesta.apellido);
-        localStorage.setItem('idrol', respuesta.idRol);
+    console.log("📤 Enviando credenciales al backend:", credenciales);
 
-        // Redirigir a contratos
+    this.authService.login(credenciales).subscribe({
+      next: () => {
+        this.cargando = false;
         this.router.navigate(['/home']);
       },
-      error: (error) => {
-        console.error('Error al iniciar sesión:', error);
-        this.mensajeError = 'Credenciales inválidas o usuario no registrado.';
+      error: (err) => {
+        console.error('❌ Error en login:', err);
+        this.mensajeError = err?.error || 'Credenciales inválidas o usuario no registrado.';
+        this.cargando = false;
+      },
+      complete: () => {
+        this.cargando = false;
       }
     });
   }
+
 }

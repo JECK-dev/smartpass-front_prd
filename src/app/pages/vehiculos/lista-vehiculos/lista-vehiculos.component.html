@@ -13,7 +13,7 @@
         <th>Color</th>
         <th>Marca</th>
         <th>Estado</th>
-       <th>Acciones</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -50,7 +50,11 @@
 
       <div class="form-row">
         <label>Placa:</label>
-        <input type="text" [(ngModel)]="nuevoVehiculo.placa" name="placa" required>
+        <input type="text" [(ngModel)]="nuevoVehiculo.placa" name="placa" required
+        minlength="6"
+        maxlength="6"
+        pattern="^[A-Z0-9]{6}$"
+        style="text-transform: uppercase;">
       </div>
 
       <div class="form-row">
@@ -68,7 +72,7 @@
         <input type="text" [(ngModel)]="nuevoVehiculo.modelo" name="modelo" required>
       </div>
 
-       <div class="form-row">
+      <div class="form-row">
         <label>Marca:</label>
         <input type="text" [(ngModel)]="nuevoVehiculo.marca" name="marca" required>
       </div>
@@ -77,8 +81,6 @@
         <label>Color:</label>
         <input type="text" [(ngModel)]="nuevoVehiculo.color" name="color" required>
       </div>
-
-     
 
       <button type="submit">Registrar</button>
     </form>
@@ -123,5 +125,4 @@
     </form>
   </div>
 </div>
- 
 </section>
