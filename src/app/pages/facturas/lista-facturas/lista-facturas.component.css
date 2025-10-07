@@ -24,6 +24,15 @@
   background-color: #2e59d9;
 }
 
+/*Paginación*/
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+
 /* Responsivo */
 @media (max-width: 768px) {
   .table {

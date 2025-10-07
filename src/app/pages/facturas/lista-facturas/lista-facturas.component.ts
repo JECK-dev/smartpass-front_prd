@@ -13,6 +13,12 @@ export class ListaFacturasComponent implements OnInit {
   
   facturas: any[] = [];
   idCliente: number = 0;
+  facturasPaginadas: any[] = [];
+  paginaActual: number = 1;
+  tamañoPagina: number = 15;
+  totalPaginas: number = 1;
+
+
   
 
   constructor(private facturaService: FacturaService) {}
@@ -26,7 +32,11 @@ export class ListaFacturasComponent implements OnInit {
 
   obtenerFacturas() {
     this.facturaService.obtenerFacturasPorCliente(this.idCliente).subscribe({
-      next: data => this.facturas = data,
+      next: data => {
+      this.facturas = data;
+      this.totalPaginas = Math.ceil(this.facturas.length / this.tamañoPagina);
+      this.actualizarPagina();
+    },
       error: err => console.error('Error al obtener facturas', err)
     });
   }
@@ -47,5 +57,25 @@ export class ListaFacturasComponent implements OnInit {
       alert('No se pudo descargar la factura');
     });
   }
+
+  actualizarPagina(): void {
+  const inicio = (this.paginaActual - 1) * this.tamañoPagina;
+  const fin = inicio + this.tamañoPagina;
+  this.facturasPaginadas = this.facturas.slice(inicio, fin);
+}
+
+paginaAnterior(): void {
+  if (this.paginaActual > 1) {
+    this.paginaActual--;
+    this.actualizarPagina();
+  }
+}
+
+paginaSiguiente(): void {
+  if (this.paginaActual < this.totalPaginas) {
+    this.paginaActual++;
+    this.actualizarPagina();
+  }
+}
 
 }

@@ -82,6 +82,14 @@
   button:hover {
     background-color: #2e59d9;
   }
+
+  .paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
   
   @media (max-width: 768px) {
     .home-section {

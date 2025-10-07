@@ -23,6 +23,12 @@ export class RecargaComponent  implements OnInit {
   metodoSeleccionado: string = '';
   contratosPrepago: Contrato[] = [];
   transacciones: TransaccionSaldo[] = [];
+  transaccionesPaginadas: TransaccionSaldo[] = [];
+  paginaActual: number = 1;
+  tamañoPagina: number = 10;
+  totalPaginas: number = 1;
+
+  
 
   metodosPago = [
     { codigo: 'Yape', nombre: 'Yape', logo: 'assets/yape.png' },
@@ -80,6 +86,29 @@ export class RecargaComponent  implements OnInit {
   obtenerTransacciones(idContrato: number): void {
     this.recargaService.getTransaccionesPorContrato(idContrato).subscribe(data => {
       this.transacciones = data;
+      this.totalPaginas = Math.ceil(this.transacciones.length / this.tamañoPagina);
+      this.actualizarPagina();
     });
   }
+
+  actualizarPagina(): void {
+    const inicio = (this.paginaActual - 1) * this.tamañoPagina;
+    const fin = inicio + this.tamañoPagina;
+    this.transaccionesPaginadas = this.transacciones.slice(inicio, fin);
+  }
+
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.actualizarPagina();
+    }
+  }
+
+  paginaSiguiente(): void {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.actualizarPagina();
+    }
+  }
+
 }

@@ -131,6 +131,28 @@ button[type="submit"]:hover,
   max-width: 500px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.paginacion button {
+  background-color: #004f83;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.paginacion button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 
 
 /* Responsive table: solo mostrar placa y contrato */
@@ -151,3 +173,4 @@ button[type="submit"]:hover,
     display: none;
   }
 } 
+

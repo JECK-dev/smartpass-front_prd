@@ -15,6 +15,11 @@ export class HisCrucespeajeComponent implements OnInit {
   filtroDesde: string = '';
   filtroHasta: string = '';
   transitos: any[] = [];
+  transitosPaginados: any[] = [];
+  paginaActual: number = 1;
+  tamañoPagina: number = 20;
+  totalPaginas: number = 1;
+
 
   constructor(private cruceService: CruceService) {}
 
@@ -43,6 +48,8 @@ export class HisCrucespeajeComponent implements OnInit {
             tr_igv: t.tr_igv ?? t.igv ?? 0,
             id_vehiculo: t.id_vehiculo ?? t.vehiculo ?? null
           }));
+          this.totalPaginas = Math.ceil(this.transitosFiltrados.length / this.tamañoPagina);
+          this.actualizarPagina();
           },
           error: (err) => {
           console.error('Error al obtener transitos:', err);
@@ -52,13 +59,17 @@ export class HisCrucespeajeComponent implements OnInit {
   }
 
   get transitosFiltrados() {
-    return this.transitos.filter(t => {
+    const filtrados = this.transitos.filter(t => {
       const placaCoincide = !this.filtroPlaca || t.tr_placa?.toLowerCase().includes(this.filtroPlaca.toLowerCase());
       const desdeOK = !this.filtroDesde || new Date(t.tr_fecha) >= new Date(this.filtroDesde);
       const hastaOK = !this.filtroHasta || new Date(t.tr_fecha) <= new Date(this.filtroHasta);
       return placaCoincide && desdeOK && hastaOK;
     });
+
+    this.totalPaginas = Math.ceil(filtrados.length / this.tamañoPagina);
+    return filtrados;
   }
+
 
   calcularTotal() {
     return this.transitosFiltrados.reduce((acc, cur) => acc + (cur.tr_monto || 0), 0);
@@ -80,4 +91,24 @@ export class HisCrucespeajeComponent implements OnInit {
     a.click();
     window.URL.revokeObjectURL(url);
   }
+  actualizarPagina(): void {
+    const inicio = (this.paginaActual - 1) * this.tamañoPagina;
+    const fin = inicio + this.tamañoPagina;
+    this.transitosPaginados = this.transitosFiltrados.slice(inicio, fin);
+  }
+
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.actualizarPagina();
+    }
+  }
+
+  paginaSiguiente(): void {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.actualizarPagina();
+    }
+  }
+
 }

@@ -22,6 +22,12 @@ export class ListaVehiculosComponent implements OnInit {
   marcas: string[] = [];
   modelos: string[] = [];
   mostrarFormulario: boolean = false;
+  
+  vehiculosPaginados: any[] = [];
+  paginaActual: number = 1;
+  tamañoPagina: number = 25;
+  totalPaginas: number = 1;
+
 
   nuevoVehiculo = {
     idContrato: '',
@@ -51,6 +57,8 @@ export class ListaVehiculosComponent implements OnInit {
 
     this.vehiculoService.getVehiculosPorCliente(idCliente).subscribe(data => {
       this.vehiculos = data;
+      this.totalPaginas = Math.ceil(this.vehiculos.length / this.tamañoPagina)
+      this.actualizarPagina();
     });
 
     this.vehiculoService.getTagsDisponibles().subscribe(data => {
@@ -107,6 +115,8 @@ export class ListaVehiculosComponent implements OnInit {
     const idCliente = Number(localStorage.getItem('idCliente'));
     this.vehiculoService.getVehiculosPorCliente(idCliente).subscribe(data => {
       this.vehiculos = data;
+      this.totalPaginas = Math.ceil(this.vehiculos.length / this.tamañoPagina)
+      this.actualizarPagina();
     });
   }
 
@@ -193,6 +203,28 @@ export class ListaVehiculosComponent implements OnInit {
 
     reader.readAsArrayBuffer(file);
   }
+
+  //Listar pagina 
+  actualizarPagina(): void {
+  const inicio = (this.paginaActual - 1) * this.tamañoPagina;
+  const fin = inicio + this.tamañoPagina;
+  this.vehiculosPaginados = this.vehiculos.slice(inicio, fin);
+  }
+
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.actualizarPagina();
+    }
+  }
+
+  paginaSiguiente(): void {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.actualizarPagina();
+    }
+  }
+
 
 
 

@@ -14,6 +14,11 @@ import { TagService } from '../../services/tag.service';
 export class TagComponent implements OnInit {
   listaTags: Tag[] = [];
   listaTagsFiltrados: Tag[] = [];
+  tagsPaginados: Tag[] = [];
+  paginaActual: number = 1;
+  tamañoPagina: number = 25;
+  totalPaginas: number = 1;
+
 
 
   filtroEstado: string = 'todos';
@@ -30,6 +35,8 @@ export class TagComponent implements OnInit {
       next: (tags) => {
         this.listaTags = tags;
         this.aplicarFiltros();
+        this.totalPaginas = Math.ceil(this.listaTagsFiltrados.length / this.tamañoPagina);
+        this.actualizarPagina();
       },
       error: (err) => console.error('Error al obtener los tags', err)
     });
@@ -46,6 +53,8 @@ export class TagComponent implements OnInit {
 
       return coincideEstado && coincideId;
     });
+    this.totalPaginas = Math.ceil(this.listaTagsFiltrados.length / this.tamañoPagina);
+    this.actualizarPagina();
   }
 
   cargarArchivoExcel(event: any): void {
@@ -83,4 +92,26 @@ export class TagComponent implements OnInit {
     };
     reader.readAsArrayBuffer(file);
   }
+
+  //listas paginación
+  actualizarPagina(): void {
+  const inicio = (this.paginaActual - 1) * this.tamañoPagina;
+  const fin = inicio + this.tamañoPagina;
+  this.tagsPaginados = this.listaTagsFiltrados.slice(inicio, fin);
+  }
+
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.actualizarPagina();
+    }
+  }
+
+  paginaSiguiente(): void {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.actualizarPagina();
+    }
+}
+
 }

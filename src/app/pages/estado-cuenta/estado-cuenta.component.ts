@@ -22,6 +22,11 @@ export class EstadoCuentaComponent implements OnInit {
   contratoSeleccionado!: number;
   periodoSeleccionado!: string;
   tipoSeleccionado: string = 'PRE'; // PRE o POS
+  movimientosPaginados: any[] = [];
+  paginaActual: number = 1;
+  tamañoPagina: number = 10;
+  totalPaginas: number = 1;
+
 
   estadoCuenta: any = null;
 
@@ -41,10 +46,9 @@ export class EstadoCuentaComponent implements OnInit {
   }
 
   buscarEstadoCuenta() {
-  if (!this.contratoSeleccionado || !this.periodoSeleccionado) return;
+    if (!this.contratoSeleccionado || !this.periodoSeleccionado) return;
 
-
-  const periodo = this.periodoSeleccionado.replace('-', '');
+    const periodo = this.periodoSeleccionado.replace('-', '');
 
     if (this.tipoSeleccionado === 'PRE') {
       this.estadoCuentaService.getPrepagoResumen(this.contratoSeleccionado, periodo)
@@ -53,7 +57,11 @@ export class EstadoCuentaComponent implements OnInit {
           this.estadoCuenta.movimientos = [];
 
           this.estadoCuentaService.getPrepagoMovimientos(this.contratoSeleccionado, periodo)
-            .subscribe(movs => this.estadoCuenta.movimientos = movs);
+            .subscribe(movs => {
+              this.estadoCuenta.movimientos = movs;
+              this.totalPaginas = Math.ceil(movs.length / this.tamañoPagina);
+              this.actualizarPagina();
+            });
         });
     } else {
       this.estadoCuentaService.getPospagoResumen(this.contratoSeleccionado, periodo)
@@ -62,10 +70,15 @@ export class EstadoCuentaComponent implements OnInit {
           this.estadoCuenta.detalles = [];
 
           this.estadoCuentaService.getPospagoMovimientos(this.contratoSeleccionado, periodo)
-            .subscribe(det => this.estadoCuenta.detalles = det);
+            .subscribe(det => {
+              this.estadoCuenta.detalles = det;
+              this.totalPaginas = Math.ceil(det.length / this.tamañoPagina);
+              this.actualizarPagina();
+            });
         });
     }
   }
+
 
   //Exportar reporte Excel y PDF
 
@@ -112,6 +125,32 @@ export class EstadoCuentaComponent implements OnInit {
 
    doc.save('estado_cuenta.pdf');
   }
+
+  actualizarPagina(): void {
+    const inicio = (this.paginaActual - 1) * this.tamañoPagina;
+    const fin = inicio + this.tamañoPagina;
+
+    if (this.tipoSeleccionado === 'PRE') {
+      this.movimientosPaginados = this.estadoCuenta?.movimientos?.slice(inicio, fin) || [];
+    } else {
+      this.movimientosPaginados = this.estadoCuenta?.detalles?.slice(inicio, fin) || [];
+    }
+  }
+
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.actualizarPagina();
+    }
+  }
+
+  paginaSiguiente(): void {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.actualizarPagina();
+    }
+}
+
 
 
 

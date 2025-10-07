@@ -97,7 +97,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let mov of estadoCuenta.movimientos">
+            <tr *ngFor="let mov of movimientosPaginados">
               <td>{{mov.fecha}}</td>
               <td>{{mov.tipo}}</td>
               <td>{{mov.descripcion}}</td>
@@ -110,6 +110,16 @@
             </tr>
           </tbody>
         </table>
+        <div class="paginacion mt-3">
+          <button class="btn btn-sm btn-primary" (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+            Anterior
+          </button>
+          <span class="mx-2">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+          <button class="btn btn-sm btn-primary" (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+            Siguiente
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
@@ -156,7 +166,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let det of estadoCuenta.detalles">
+            <tr *ngFor="let det of movimientosPaginados">
               <td>{{det.numeroFactura}}</td>
               <td>{{det.fechaEmision}}</td>
               <td>{{det.total | currency:'PEN':'symbol-narrow'}}</td>
@@ -167,6 +177,16 @@
             </tr>
           </tbody>
         </table>
+        <div class="paginacion mt-3">
+          <button class="btn btn-sm btn-primary" (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+            Anterior
+          </button>
+          <span class="mx-2">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+          <button class="btn btn-sm btn-primary" (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+            Siguiente
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
