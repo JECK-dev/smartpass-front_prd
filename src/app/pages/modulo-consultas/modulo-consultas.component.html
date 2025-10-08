@@ -29,7 +29,7 @@
     <textarea id="detalle" name="detalle" [(ngModel)]="consulta.detalle"
               required rows="5" maxlength="500"
               placeholder="Describa su consulta o reclamo..."
-              (input)="contador = consulta.detalle?.length || 0"></textarea>
+              (input)="contador = consulta.detalle.length || 0"></textarea>
     <div class="row-foot">
       <small>{{ contador }}/500</small>
       <small *ngIf="consultaForm.submitted && !consulta.detalle" class="err">El detalle es obligatorio.</small>

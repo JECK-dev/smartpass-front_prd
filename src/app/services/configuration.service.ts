@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment'; // ✅ Import correcto
 
 export interface UserSettings {
   notifCorreo: boolean;
@@ -11,14 +12,13 @@ export interface UserSettings {
 
 @Injectable({ providedIn: 'root' })
 export class ConfiguracionService {
-  // Ajusta estos endpoints si tu backend usa otro prefijo
-  private baseConfig = '/api/configuracion';   // GET/PUT preferencias
-  private baseUsuarios = 'http://localhost:8080/api/usuarios';      // POST /{id}/password
+  private baseConfig = `${environment.apiUrl}/configuracion`; // ✅ Endpoint dinámico según entorno
+  private baseUsuarios = `${environment.apiUrl}/usuarios`;    // ✅ También dinámico
   private localKey = 'sp_cfg';
 
   constructor(private http: HttpClient) {}
 
-  /** Devuelve el id de usuario. Si no existe, usa 1 (dev). */
+  /** Devuelve el id de usuario. Si no existe, usa 1 (modo desarrollo). */
   getUsuarioId(): number {
     const raw =
       localStorage.getItem('idusuario') ||
@@ -34,12 +34,17 @@ export class ConfiguracionService {
       catchError(() => {
         const local = localStorage.getItem(this.localKey);
         if (local) return of(JSON.parse(local) as UserSettings);
-        return of<UserSettings>({ notifCorreo: false, notifTelefono: false, idioma: 'es', modoOscuro: false });
+        return of<UserSettings>({
+          notifCorreo: false,
+          notifTelefono: false,
+          idioma: 'es',
+          modoOscuro: false
+        });
       })
     );
   }
 
-  /** Guarda preferencias en backend; si falla, persiste local para no perder cambios. */
+  /** Guarda preferencias en backend; si falla, persiste localmente para no perder cambios. */
   guardarPreferencias(s: UserSettings): Observable<UserSettings> {
     return this.http.put<UserSettings>(this.baseConfig, s).pipe(
       tap((val) => localStorage.setItem(this.localKey, JSON.stringify(val))),
@@ -52,6 +57,9 @@ export class ConfiguracionService {
 
   /** Cambio de contraseña: POST /api/usuarios/{id}/password */
   cambiarPassword(idUsuario: number, actual: string, nueva: string, confirmar: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUsuarios}/${idUsuario}/password`, { actual, nueva, confirmar });
+    return this.http.post<void>(
+      `${this.baseUsuarios}/${idUsuario}/password`,
+      { actual, nueva, confirmar }
+    );
   }
 }

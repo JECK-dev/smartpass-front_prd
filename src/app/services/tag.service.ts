@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tag } from '../models/tag.model'; // Asegúrate que esta ruta sea correcta
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagService {
-  private apiUrl = 'http://localhost:8080/api/tags'; // Reemplaza con tu URL real
+  private apiUrl = `${environment.apiUrl}/tags`; // Reemplaza con tu URL real
 
   constructor(private http: HttpClient) {}
 

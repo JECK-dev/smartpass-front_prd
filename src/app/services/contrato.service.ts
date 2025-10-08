@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Contrato } from '../models/contrato.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ContratoService {
     throw new Error('Method not implemented.');
   }
 
-  private apiUrl = 'http://localhost:8080/api/contratos';
+  private apiUrl = `${environment.apiUrl}/contratos`;
 
   constructor(private http: HttpClient) {}
 

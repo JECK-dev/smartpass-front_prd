@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface LoginPayload {
   usuario: string;      // en tu form lo mapeamos desde "documento"
@@ -23,7 +24,7 @@ export interface LoginResponse {
 })
 export class AuthService {
   // Si tienes environment, usa environment.apiUrl; si no, deja esta constante:
-  private baseUrl = 'http://localhost:8080/api';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RegistroRequest } from '../models/registro.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })  
 export class RegistroService {
-  private apiUrl = 'http://localhost:8080/api/registro';
+  private apiUrl = `${environment.apiUrl}/registro`;
 
   constructor(private http: HttpClient) {}
 
