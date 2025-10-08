@@ -11,20 +11,18 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/smartpassfrond",
+            "outputPath": "dist/smartpassfrond/browser",
             "index": "src/index.html",
-            "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "main": "src/main.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-               "src/favicon.ico",
-                "src/assets",
-                "src/_redirects",
-                "src/_headers",
+              "src/favicon.ico",
+              "src/assets",
+              "src/_redirects",
+              "src/_headers",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -36,12 +34,7 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            ]
           },
           "configurations": {
             "production": {
@@ -75,12 +68,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "smartpassfrond:build"
+          },
           "configurations": {
             "production": {
-              "buildTarget": "smartpassfrond:build:production"
+              "browserTarget": "smartpassfrond:build:production"
             },
             "development": {
-              "buildTarget": "smartpassfrond:build:development"
+              "browserTarget": "smartpassfrond:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,10 +87,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {
@@ -102,9 +95,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }
