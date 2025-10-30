@@ -36,6 +36,18 @@
     </div>
   </div>
 
+  <!-- Archivo adjunto -->
+  <div class="form-row">
+    <label for="archivo">Adjuntar archivo (opcional)</label>
+    <input type="file" id="archivo" name="archivo"
+           (change)="onFileSelected($event)"
+           accept=".jpg,.jpeg,.png,.pdf,.docx,.xlsx" />
+    <small class="file-info" *ngIf="archivoSeleccionado">
+      Archivo seleccionado: {{ archivoSeleccionado.name }}
+    </small>
+  </div>
+
+
   <!-- Acciones -->
   <div class="acciones-formulario">
     <button type="submit" [disabled]="isSubmitting || !consultaForm.form.valid" class="btn-enviar">
