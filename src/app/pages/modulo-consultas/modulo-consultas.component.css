@@ -63,6 +63,19 @@
     font-weight: bold;
     text-align: center;
   }
+
+  input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  }
+  
+  .file-info {
+    color: #004f83;
+    font-size: 13px;
+    margin-top: 5px;
+  }
   
   @media (max-width: 768px) {
     .home-section {
