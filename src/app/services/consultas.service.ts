@@ -18,8 +18,11 @@ export class ConsultasService {
   return this.http.get<any[]>(`${this.base}/reclamos/vehi/${idCliente}`);
   }
 
-  crearReclamo(payload: any): Observable<any> {
-    return this.http.post(`${this.base}/reclamos`, payload);
+  crearReclamo(payload: FormData): Observable<any> {
+    return this.http.post(`${this.base}/reclamos`, payload, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
   getReclamos(): Observable<any[]> {
