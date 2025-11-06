@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { CrearContratoComponent } from '../crear-contrato/crear-contrato.component';
 import { ContratoService } from '../../../services/contrato.service';
 import { Contrato } from '../../../models/contrato.model';
 
@@ -12,12 +11,17 @@ import { Contrato } from '../../../models/contrato.model';
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './lista-contratos.component.html',
   styleUrls: ['./lista-contratos.component.css']
- 
 })
 export class ListaContratosComponent implements OnInit {
+
   contratos: Contrato[] = [];
   filtroCodigo = '';
   filtroEstado = '';
+
+  // 🔹 Propiedades nuevas para el modal
+  mostrarModal = false;
+  contratoSeleccionado!: Contrato;
+  nuevoEstado: number = 0;
 
   constructor(private contratoService: ContratoService, private router: Router) {}
 
@@ -25,7 +29,7 @@ export class ListaContratosComponent implements OnInit {
     this.cargarContratosPorCliente();
   }
 
-  // ✅ Nuevo método
+  // ✅ Método original para cargar contratos
   cargarContratosPorCliente(): void {
     const idCliente = Number(localStorage.getItem('idCliente'));
     if (!idCliente) {
@@ -65,18 +69,52 @@ export class ListaContratosComponent implements OnInit {
     }
   }
 
+  // ✅ Mantiene tu funcionalidad de dar de baja
   darDeBaja(contrato: Contrato): void {
     if (!confirm(`¿Seguro que deseas dar de baja el contrato ${contrato.nroContrato}?`)) return;
 
     this.contratoService.darDeBaja(contrato.idContrato).subscribe({
       next: () => {
         alert(`Contrato ${contrato.nroContrato} dado de baja correctamente`);
-        this.cargarContratosPorCliente(); // ✅ ahora sí existe
+        this.cargarContratosPorCliente();
       },
       error: (err) => {
         console.error(err);
         alert('Error al dar de baja contrato');
       }
     });
+  }
+
+  // 🔹 Abrir modal para cambiar modalidad
+  abrirModal(contrato: Contrato): void {
+    this.contratoSeleccionado = { ...contrato };
+    this.nuevoEstado = contrato.idEstado;
+    this.mostrarModal = true;
+  }
+
+  // 🔹 Cerrar modal
+  cerrarModal(): void {
+    this.mostrarModal = false;
+  }
+
+  // 🔹 Guardar cambio de modalidad
+  guardarCambioModalidad(): void {
+    if (this.nuevoEstado === this.contratoSeleccionado.idEstado) {
+      alert('No se ha realizado ningún cambio.');
+      return;
+    }
+
+    this.contratoService.cambiarModalidad(this.contratoSeleccionado.idContrato, this.nuevoEstado)
+      .subscribe({
+        next: () => {
+          alert('Modalidad actualizada correctamente.');
+          this.mostrarModal = false;
+          this.cargarContratosPorCliente();
+        },
+        error: (err) => {
+          const mensaje = err.error?.mensaje || 'Error al cambiar modalidad.';
+          alert(mensaje);
+        }
+      });
   }
 }
