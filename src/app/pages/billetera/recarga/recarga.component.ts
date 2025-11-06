@@ -69,6 +69,25 @@ export class RecargaComponent  implements OnInit {
   }
 
   recargarSaldo(): void {
+     if (!this.recarga.monto || this.recarga.monto <= 0) {
+      alert('⚠️ El monto a recargar debe ser mayor a 0.');
+      return; // Detiene la ejecución
+    }
+
+    if (!this.recarga.idContrato) {
+      alert('Debe seleccionar un contrato antes de continuar.');
+      return;
+    }
+
+    if (!this.metodoSeleccionado) {
+      alert('Debe seleccionar un método de pago.');
+      return;
+    }
+
+  // Aquí continúa la lógica normal de tu recarga
+  console.log('Ejecutando recarga...', this.recarga);
+
+
     this.recargaService.realizarRecarga(this.recarga).subscribe(response => {
       alert(response);
       this.obtenerTransacciones(this.recarga.idContrato);
@@ -110,5 +129,21 @@ export class RecargaComponent  implements OnInit {
       this.actualizarPagina();
     }
   }
+
+  bloquearNegativos(event: KeyboardEvent) {
+  // Evita que el usuario escriba el signo "-" o "e" (notación científica)
+  if (event.key === '-' || event.key.toLowerCase() === 'e') {
+    event.preventDefault();
+  }
+}
+
+bloquearPegadoNegativo(event: ClipboardEvent) {
+  // Evita pegar valores negativos o texto inválido
+  const textoPegado = event.clipboardData?.getData('text') || '';
+  if (textoPegado.includes('-') || isNaN(Number(textoPegado)) || Number(textoPegado) <= 0) {
+    event.preventDefault();
+  }
+}
+
 
 }
