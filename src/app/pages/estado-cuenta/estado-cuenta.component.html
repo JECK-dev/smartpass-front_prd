@@ -49,6 +49,14 @@
     </div>
   </div>
 
+  <div class="col-12 text-end mt-2" *ngIf="fechaVencimiento">
+    <small class="text-muted">
+       <strong>Fecha de vencimiento del estado de cuenta:</strong>
+      {{ fechaVencimiento }}
+    </small>
+  </div>
+
+
   <!-- ============================= -->
   <!-- Vista PREPAGO -->
   <!-- ============================= -->
@@ -106,7 +114,7 @@
               </td>
             </tr>
             <tr *ngIf="!estadoCuenta.movimientos || estadoCuenta.movimientos.length === 0">
-              <td colspan="4" class="text-center">No se encontraron movimientos en el período seleccionado</td>
+              <td colspan="4" class="text-center">No hay movimientos registrados</td>
             </tr>
           </tbody>
         </table>
@@ -173,7 +181,7 @@
               <td>{{det.estado}}</td>
             </tr>
             <tr *ngIf="!estadoCuenta.detalles || estadoCuenta.detalles.length === 0">
-              <td colspan="4" class="text-center">No se encontraron movimientos en el período seleccionado</td>
+              <td colspan="4" class="text-center">No hay consumos registrados</td>
             </tr>
           </tbody>
         </table>
