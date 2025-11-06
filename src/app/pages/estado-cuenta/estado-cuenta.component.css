@@ -18,6 +18,12 @@ h1 {
   gap: 10px;
 }
 
+.text-muted {
+  font-size: 0.95rem;
+  color: #6c757d;
+}
+
+
 
 @media (max-width: 768px) {
   .card-header input {
