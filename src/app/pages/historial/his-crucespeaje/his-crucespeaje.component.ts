@@ -15,18 +15,17 @@ export class HisCrucespeajeComponent implements OnInit {
   filtroDesde: string = '';
   filtroHasta: string = '';
   transitos: any[] = [];
+  transitosFiltrados: any[] = [];
   transitosPaginados: any[] = [];
   paginaActual: number = 1;
   tamañoPagina: number = 20;
   totalPaginas: number = 1;
-
 
   constructor(private cruceService: CruceService) {}
 
   ngOnInit(): void {
     let idCliente = 0;
 
-    
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedId = localStorage.getItem('idCliente');
       if (storedId) {
@@ -48,37 +47,51 @@ export class HisCrucespeajeComponent implements OnInit {
             tr_igv: t.tr_igv ?? t.igv ?? 0,
             id_vehiculo: t.id_vehiculo ?? t.vehiculo ?? null
           }));
-          this.totalPaginas = Math.ceil(this.transitosFiltrados.length / this.tamañoPagina);
-          this.actualizarPagina();
-          },
-          error: (err) => {
+          this.aplicarFiltros();
+        },
+        error: (err) => {
           console.error('Error al obtener transitos:', err);
         }
-        });
+      });
     }
   }
 
-  get transitosFiltrados() {
-    const filtrados = this.transitos.filter(t => {
-      const placaCoincide = !this.filtroPlaca || t.tr_placa?.toLowerCase().includes(this.filtroPlaca.toLowerCase());
-      const desdeOK = !this.filtroDesde || new Date(t.tr_fecha) >= new Date(this.filtroDesde);
-      const hastaOK = !this.filtroHasta || new Date(t.tr_fecha) <= new Date(this.filtroHasta);
-      return placaCoincide && desdeOK && hastaOK;
-    });
+  aplicarFiltros(): void {
+    let filtrados = this.transitos;
 
-    this.totalPaginas = Math.ceil(filtrados.length / this.tamañoPagina);
-    return filtrados;
+    // Normaliza fechas
+    const desde = this.filtroDesde ? new Date(this.filtroDesde + 'T00:00:00') : null;
+    const hasta = this.filtroHasta ? new Date(this.filtroHasta + 'T23:59:59.999') : null;
+
+    // Filtro por placa
+    if (this.filtroPlaca.trim()) {
+      const placa = this.filtroPlaca.toLowerCase();
+      filtrados = filtrados.filter(t => t.tr_placa?.toLowerCase().includes(placa));
+    }
+
+    // Filtro por rango de fechas
+    if (desde) {
+      filtrados = filtrados.filter(t => new Date(t.tr_fecha) >= desde);
+    }
+    if (hasta) {
+      filtrados = filtrados.filter(t => new Date(t.tr_fecha) <= hasta);
+    }
+
+    this.transitosFiltrados = filtrados;
+    this.paginaActual = 1;
+    this.totalPaginas = Math.max(1, Math.ceil(this.transitosFiltrados.length / this.tamañoPagina));
+    this.actualizarPagina();
   }
 
-
-  calcularTotal() {
+  calcularTotal(): number {
     return this.transitosFiltrados.reduce((acc, cur) => acc + (cur.tr_monto || 0), 0);
   }
 
-  limpiarFiltros() {
+  limpiarFiltros(): void {
     this.filtroPlaca = '';
     this.filtroDesde = '';
     this.filtroHasta = '';
+    this.aplicarFiltros();
   }
 
   descargarComprobante(transito: any) {
@@ -91,6 +104,7 @@ export class HisCrucespeajeComponent implements OnInit {
     a.click();
     window.URL.revokeObjectURL(url);
   }
+
   actualizarPagina(): void {
     const inicio = (this.paginaActual - 1) * this.tamañoPagina;
     const fin = inicio + this.tamañoPagina;
@@ -110,5 +124,4 @@ export class HisCrucespeajeComponent implements OnInit {
       this.actualizarPagina();
     }
   }
-
 }
