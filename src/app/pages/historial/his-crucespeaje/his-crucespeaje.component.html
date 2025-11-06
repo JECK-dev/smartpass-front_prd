@@ -1,67 +1,92 @@
 <section class="home-section">
-    <div class="titulo-seccion">
-      <h3>Cruces de Peaje</h3>
-    </div>
-    
-    <div class="filtros-transitos">
-      <input type="text" placeholder="Filtrar por placa..." [(ngModel)]="filtroPlaca" />
-      <input type="date" [(ngModel)]="filtroDesde" />
-      <input type="date" [(ngModel)]="filtroHasta" />
-      <button (click)="limpiarFiltros()">Limpiar</button>
-    </div>
-  
-    <!-- Resumen de cruces -->
-    <div class="resumen-metricas">
-      <div class="card-resumen">
-        <span class="label">Total Cruces </span>
-        <span class="valor">{{ transitosFiltrados.length }}</span>
-      </div>
-      <div class="card-resumen">
-        <span class="label">Consumo Total (S/) </span>
-        <span class="valor">{{ calcularTotal() | number:'1.2-2' }}</span>
-      </div>
-    </div>
-  
-    <!-- Filtros -->
-    
-  
-    <!-- Tabla -->
-    <table class="tabla-transitos">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Fecha</th>
-          <th>Placa</th>
-          <th>Plaza</th>
-          <th>Vía</th>
-          <th>Categoría</th>
-          <th>Monto</th>
-          <th>IGV</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let t of transitosPaginados">
-          <td>{{ t.tr_id }}</td>
-          <td>{{ t.tr_fecha | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-          <td>{{ t.tr_placa }}</td>
-          <td>{{ t.tr_plaza }}</td>
-          <td>{{ t.tr_via }}</td>
-          <td>{{ t.tr_categoria }}</td>
-          <td>S/. {{ t.tr_monto }}</td>
-          <td>S/. {{ t.tr_igv }}</td>
-          <td><button (click)="descargarComprobante(t)">Descargar</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="paginacion mt-3">
-      <button class="btn btn-sm btn-primary" (click)="paginaAnterior()" [disabled]="paginaActual === 1">
-        Anterior
-      </button>
-      <span class="mx-2">Página {{ paginaActual }} de {{ totalPaginas }}</span>
-      <button class="btn btn-sm btn-primary" (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
-        Siguiente
-      </button>
-    </div>
+  <div class="titulo-seccion">
+    <h3>Cruces de Peaje</h3>
+  </div>
 
-  </section>
+  <!-- Filtros -->
+  <div class="filtros-transitos">
+    <input
+      type="text"
+      placeholder="Filtrar por placa..."
+      [(ngModel)]="filtroPlaca"
+      (ngModelChange)="aplicarFiltros()"
+    />
+    <input
+      type="date"
+      [(ngModel)]="filtroDesde"
+      (ngModelChange)="aplicarFiltros()"
+    />
+    <input
+      type="date"
+      [(ngModel)]="filtroHasta"
+      (ngModelChange)="aplicarFiltros()"
+    />
+    <button (click)="limpiarFiltros()">Limpiar</button>
+  </div>
+
+  <!-- Resumen -->
+  <div class="resumen-metricas">
+    <div class="card-resumen">
+      <span class="label">Total Cruces</span>
+      <span class="valor">{{ transitosFiltrados.length }}</span>
+    </div>
+    <div class="card-resumen">
+      <span class="label">Consumo Total (S/)</span>
+      <span class="valor">{{ calcularTotal() | number:'1.2-2' }}</span>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <table class="tabla-transitos">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Fecha</th>
+        <th>Placa</th>
+        <th>Plaza</th>
+        <th>Vía</th>
+        <th>Categoría</th>
+        <th>Monto</th>
+        <th>IGV</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of transitosPaginados">
+        <td>{{ t.tr_id }}</td>
+        <td>{{ t.tr_fecha | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+        <td>{{ t.tr_placa }}</td>
+        <td>{{ t.tr_plaza }}</td>
+        <td>{{ t.tr_via }}</td>
+        <td>{{ t.tr_categoria }}</td>
+        <td>S/. {{ t.tr_monto }}</td>
+        <td>S/. {{ t.tr_igv }}</td>
+        <td>
+          <button (click)="descargarComprobante(t)">Descargar</button>
+        </td>
+      </tr>
+      <tr *ngIf="transitosPaginados.length === 0">
+        <td colspan="9" style="text-align:center;">No se encontraron resultados</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  <div class="paginacion mt-3">
+    <button
+      class="btn btn-sm btn-primary"
+      (click)="paginaAnterior()"
+      [disabled]="paginaActual === 1"
+    >
+      Anterior
+    </button>
+    <span class="mx-2">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+    <button
+      class="btn btn-sm btn-primary"
+      (click)="paginaSiguiente()"
+      [disabled]="paginaActual === totalPaginas"
+    >
+      Siguiente
+    </button>
+  </div>
+</section>
