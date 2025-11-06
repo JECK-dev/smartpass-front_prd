@@ -14,7 +14,7 @@ export class ContratoService {
 
   private apiUrl = `${environment.apiUrl}/contratos`;
 
-  constructor(private http: HttpClient) {}
+ constructor(private http: HttpClient) {}
 
   listarContratos(): Observable<Contrato[]> {
     return this.http.get<Contrato[]>(this.apiUrl);
@@ -31,12 +31,24 @@ export class ContratoService {
   listarContratosPorCliente(idCliente: number): Observable<Contrato[]> {
     return this.http.get<Contrato[]>(`${this.apiUrl}/cliente/${idCliente}`);
   }
+
   actualizarContrato(id: number, contrato: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, contrato);
   }
 
-   darDeBaja(idContrato: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${idContrato}/baja`, {});
+  /**
+   * ✅ Cambiar modalidad de contrato
+   * @param idContrato ID del contrato
+   * @param nuevoEstado 1 = Activo, 2 = Baja, 3 = Suspendido
+   */
+  cambiarModalidad(idContrato: number, nuevoEstado: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${idContrato}/cambiar-modalidad?nuevoEstado=${nuevoEstado}`, {});
   }
 
+  /**
+   * ✅ Dar de baja (usa cambiarModalidad con nuevoEstado = 2)
+   */
+  darDeBaja(idContrato: number): Observable<any> {
+    return this.cambiarModalidad(idContrato, 2);
+  }
 }
