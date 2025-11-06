@@ -153,6 +153,18 @@ button[type="submit"]:hover,
   cursor: not-allowed;
 }
 
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+
 
 
 /* Responsive table: solo mostrar placa y contrato */
